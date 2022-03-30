@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
         primaryStage.setTitle("UML diagramy");
-        primaryStage.setScene(new Scene(root, 400, 300)); 
+        primaryStage.setScene(new Scene(root, 800, 600)); 
         primaryStage.show();
     }
 
