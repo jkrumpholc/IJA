@@ -15,8 +15,9 @@
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "ija.uml.Main",
-            "projectName": "ija_project_9cd05e1c",
+            "projectName": "IJA_PROJEKT_19498ed4",
             "vmArgs": "--module-path ../javafx-sdk-17.0.2/lib --add-modules javafx.controls,javafx.fxml"
+
         }
     ]
 }
