@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-    prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.uml.Controller">
-    <children>
-        <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.uml.Controller">
+    <center>
+        <AnchorPane prefHeight="570.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="570.0" prefWidth="600.0" />
+         </children>
+        </AnchorPane>
+    </center>
+    <left>
+        <Pane prefHeight="570.0" prefWidth="200.0" style="-fx-background-color: #B9E4B9;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="300.0" prefWidth="200.0">
+               <children>
+                  <Label text="Diagram tříd">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <JFXButton prefWidth="200.0" text="xxx" /> 
+                  <Label text="Sekvenční diagram">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <JFXButton layoutX="10.0" layoutY="27.0" prefWidth="200.0" />
+                  <JFXButton prefWidth="200.0" /> 
+               </children></VBox>
+         </children></Pane>
+    </left>
+    <top>
+        <MenuBar layoutY="2.0" prefHeight="30.0" prefWidth="800.0">
             <menus>
                 <Menu mnemonicParsing="false" text="Soubor">
                     <items>
@@ -25,5 +56,5 @@
                 </Menu>
             </menus>
         </MenuBar>
-    </children>
-</AnchorPane>
+    </top>
+</BorderPane>
