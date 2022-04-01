@@ -1,0 +1,19 @@
+.menu .label
+{
+    -fx-text-fill: white;
+}
+
+.pane_class
+{
+    -fx-background-color: white;
+}
+
+.centre
+{
+    -fx-background-color: #D6DBDF;
+}
+
+.diagram_button
+{
+    -fx-background-color: #D6DBDF;
+}
