@@ -1,0 +1,55 @@
+{
+  "diagrams":
+  {
+    "diagram" :
+    {
+      "name": "diagram",
+      "classes": ["class1"],
+      "classifiers": ["classifier1"]
+    }
+  },
+  "classes":
+  {
+    "class1": 
+    {
+      "name": "class",
+      "abstract": false,
+      "diagram": "diagram",
+      "atributes": ["attribute1","attribute2"]
+    }
+  },
+  "classifiers":
+  {
+    "classifier1": 
+    {
+      "name": "classifier",
+      "defined": true
+    }
+  },
+  "attributes":
+  {
+    "attribute1":
+    {
+      "name": "attribute",
+      "type": "type",
+      "position": 0,
+      "class": "class"
+    },
+    "attribute2":
+    {
+      "name": "attribute_second",
+      "type": "type",
+      "position": 2,
+      "class": "class"
+    }
+  },
+  "operations":
+  {
+    "operation1":
+    {
+      "name": "operation",
+      "type": "type",
+      "arguments": []
+    }
+  }
+}
