@@ -1,11 +1,17 @@
+<!-- autor: Tereza Buchníčková     // -->
+<!-- login: xbuchn00               // -->
+<!-- hlavní struktura aplikace     // -->
+
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -14,59 +20,47 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.uml.Controller">
     <center>
-        <AnchorPane prefHeight="570.0" prefWidth="600.0" styleClass="centre" BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane prefHeight="570.0" prefWidth="600.0" styleClass="centre" fx:id="xxx" />
-            <AnchorPane fx:id="yyy" layoutX="10.0" layoutY="10.0" prefHeight="570.0" prefWidth="600.0" styleClass="centre" />
-            <AnchorPane fx:id="zzz" layoutX="10.0" layoutY="10.0" prefHeight="570.0" prefWidth="600.0" styleClass="centre">
-               <children>
-                  <TitledPane animated="false" layoutX="29.0" layoutY="34.0" prefHeight="199.0" prefWidth="156.0" text="Class">
+        <AnchorPane prefHeight="575.0" prefWidth="600.0" styleClass="gray" BorderPane.alignment="CENTER">
+            <children>
+                <ScrollPane fx:id="dt_scroll" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="pane_class">
-                           <children>
-                              <VBox prefHeight="175.0" prefWidth="154.0">
-                                 <children>
-                                    <Label text="Label" />
-                                    <Label text="Label" />
-                                    <Label text="Label" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
+                        <Pane fx:id="dt_pane" />
                     </content>
-                  </TitledPane>
-               </children>
-            </AnchorPane>
-         </children>
+                </ScrollPane>
+            </children>
         </AnchorPane>
     </center>
     <left>
-        <Pane prefHeight="570.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-         <children>
-            <VBox prefHeight="300.0" prefWidth="200.0">
-               <children>
-                  <Label text="Diagram tříd">
+        <Pane prefHeight="575.0" prefWidth="200.0" styleClass="white" BorderPane.alignment="CENTER">
+            <children>
+                <VBox prefHeight="500.0" prefWidth="200.0">
+                    <children>
+                        <Button fx:id="test_button" mnemonicParsing="false" onAction="#addClass" text="Test přidání třídy" />
+                        <JFXButton onAction="#hendleButtonAction" prefWidth="200.0" text="Diagram tříd" fx:id="x">
                      <font>
                         <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <JFXButton onAction="#hendleButtonAction" prefWidth="200.0" styleClass=".diagram_button" text="xxx" fx:id="x" /> 
-                  <Label text="Sekvenční diagram">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <JFXButton fx:id="y" layoutX="10.0" layoutY="27.0" onAction="#hendleButtonAction" prefWidth="200.0" styleClass=".diagram_button" text="yyy" />
-                  <JFXButton fx:id="z" onAction="#hendleButtonAction" prefWidth="200.0" styleClass=".diagram_button" text="zzz" /> 
-               </children></VBox>
-         </children></Pane>
+                     </font></JFXButton>
+                        <Label text="Sekvenční diagram">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                        </Label>
+                        <JFXButton fx:id="y" onAction="#hendleButtonAction" prefWidth="200.0" text="Sekvenčí diagram 1" />
+                        <JFXButton fx:id="z" onAction="#hendleButtonAction" prefWidth="200.0" text="Sekvenčí diagram 2" />
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
     </left>
     <top>
-        <MenuBar layoutY="2.0" prefHeight="30.0" prefWidth="800.0" style="-fx-background-color: #002d40;">
+        <MenuBar prefHeight="25.0" prefWidth="800.0" styleClass="blue">
             <menus>
                 <Menu mnemonicParsing="false" text="Soubor">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#open" text="Otevřít" />
+                        <MenuItem mnemonicParsing="false" text="Otevřít" />
                         <MenuItem mnemonicParsing="false" text="Uložit jako" />
                     </items>
                 </Menu>

@@ -1,95 +1,66 @@
+<!-- autor: Tereza Buchníčková     // -->
+<!-- login: xbuchn00               // -->
+<!-- hlavní struktura aplikace     // -->
+
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.uml.Controller">
     <center>
-        <AnchorPane prefHeight="570.0" prefWidth="600.0" styleClass="centre" BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane prefHeight="570.0" prefWidth="600.0" styleClass="centre" fx:id="xxx" />
-            <AnchorPane fx:id="yyy" layoutX="10.0" layoutY="10.0" prefHeight="570.0" prefWidth="600.0" styleClass="centre" />
-            <AnchorPane fx:id="zzz" layoutX="10.0" layoutY="10.0" prefHeight="570.0" prefWidth="600.0" styleClass="centre">
-               <children>
-                  <TitledPane animated="false" collapsible="false" layoutX="26.0" layoutY="31.0" prefHeight="110.0" prefWidth="90.0" text="Class">
+        <AnchorPane prefHeight="575.0" prefWidth="600.0" styleClass="gray" BorderPane.alignment="CENTER">
+            <children>
+                <ScrollPane fx:id="dt_scroll" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="pane_class">
-                           <children>
-                              <VBox prefHeight="90.0" prefWidth="90.0">
-                                 <children>
-                                    <Label text="Label">
-                                       <VBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets left="2.0" right="2.0" top="2.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label text="Label">
-                                       <padding>
-                                          <Insets left="2.0" right="2.0" top="2.0" />
-                                       </padding>
-                                    </Label>
-                                    <Line endX="-10.0" startX="-100.0" stroke="#949494" />
-                                    <Label text="Label">
-                                       <padding>
-                                          <Insets left="2.0" right="2.0" top="2.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label text="Label">
-                                       <padding>
-                                          <Insets left="2.0" right="2.0" top="2.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
+                        <Pane fx:id="dt_pane" />
                     </content>
-                  </TitledPane>
-               </children>
-            </AnchorPane>
-         </children>
+                </ScrollPane>
+            </children>
         </AnchorPane>
     </center>
     <left>
-        <Pane prefHeight="570.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-         <children>
-            <VBox prefHeight="300.0" prefWidth="200.0">
-               <children>
-                  <Label text="Diagram tříd">
+        <Pane prefHeight="575.0" prefWidth="200.0" styleClass="white" BorderPane.alignment="CENTER">
+            <children>
+                <VBox prefHeight="500.0" prefWidth="200.0">
+                    <children>
+                        <Button fx:id="test_button" mnemonicParsing="false" onAction="#addClass" text="Test přidání třídy" />
+                        <JFXButton onAction="#hendleButtonAction" prefWidth="200.0" text="Diagram tříd" fx:id="x">
                      <font>
                         <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <JFXButton onAction="#hendleButtonAction" prefWidth="200.0" styleClass=".diagram_button" text="xxx" fx:id="x" /> 
-                  <Label text="Sekvenční diagram">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <JFXButton fx:id="y" layoutX="10.0" layoutY="27.0" onAction="#hendleButtonAction" prefWidth="200.0" styleClass=".diagram_button" text="yyy" />
-                  <JFXButton fx:id="z" onAction="#hendleButtonAction" prefWidth="200.0" styleClass=".diagram_button" text="zzz" /> 
-               </children></VBox>
-         </children></Pane>
+                     </font></JFXButton>
+                        <Label text="Sekvenční diagram">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                        </Label>
+                        <JFXButton fx:id="y" onAction="#hendleButtonAction" prefWidth="200.0" text="Sekvenčí diagram 1" />
+                        <JFXButton fx:id="z" onAction="#hendleButtonAction" prefWidth="200.0" text="Sekvenčí diagram 2" />
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
     </left>
     <top>
-        <MenuBar layoutY="2.0" prefHeight="30.0" prefWidth="800.0" style="-fx-background-color: #002d40;">
+        <MenuBar prefHeight="25.0" prefWidth="800.0" styleClass="blue">
             <menus>
                 <Menu mnemonicParsing="false" text="Soubor">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#open" text="Otevřít" />
+                        <MenuItem mnemonicParsing="false" text="Otevřít" />
                         <MenuItem mnemonicParsing="false" text="Uložit jako" />
                     </items>
                 </Menu>

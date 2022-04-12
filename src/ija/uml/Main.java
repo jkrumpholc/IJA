@@ -1,3 +1,7 @@
+// autor: Tereza Buchníčková        //
+// login: xbuchn00                  //
+// vytváření hlavního okna aplikace //
+
 package ija.uml;
 
 import javafx.application.Application;
