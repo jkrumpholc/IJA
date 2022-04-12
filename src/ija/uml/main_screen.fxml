@@ -1,8 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!-- autor: Tereza Buchníčková     // -->
 <!-- login: xbuchn00               // -->
 <!-- hlavní struktura aplikace     // -->
-
-<?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
