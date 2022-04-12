@@ -20,7 +20,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.uml.Controller">
     <center>
-        <AnchorPane prefHeight="575.0" prefWidth="600.0" styleClass="gray" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="center" prefHeight="575.0" prefWidth="600.0" styleClass="gray" BorderPane.alignment="CENTER">
             <children>
                 <ScrollPane fx:id="dt_scroll" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
@@ -33,20 +33,21 @@
     <left>
         <Pane prefHeight="575.0" prefWidth="200.0" styleClass="white" BorderPane.alignment="CENTER">
             <children>
-                <VBox prefHeight="500.0" prefWidth="200.0">
+                <VBox fx:id="left_menu" prefHeight="500.0" prefWidth="200.0">
                     <children>
                         <Button fx:id="test_button" mnemonicParsing="false" onAction="#addClass" text="Test přidání třídy" />
                         <JFXButton onAction="#hendleButtonAction" prefWidth="200.0" text="Diagram tříd" fx:id="x">
-                     <font>
-                        <Font size="13.0" />
-                     </font></JFXButton>
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </JFXButton>
                         <Label text="Sekvenční diagram">
                             <font>
                                 <Font size="13.0" />
                             </font>
-                     <padding>
-                        <Insets left="8.0" />
-                     </padding>
+                            <padding>
+                                <Insets left="8.0" />
+                            </padding>
                         </Label>
                         <JFXButton fx:id="y" onAction="#hendleButtonAction" prefWidth="200.0" text="Sekvenčí diagram 1" />
                         <JFXButton fx:id="z" onAction="#hendleButtonAction" prefWidth="200.0" text="Sekvenčí diagram 2" />
@@ -60,7 +61,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Soubor">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Otevřít" />
+                        <MenuItem mnemonicParsing="false" text="Otevřít" onAction="#open" />
                         <MenuItem mnemonicParsing="false" text="Uložit jako" />
                     </items>
                 </Menu>

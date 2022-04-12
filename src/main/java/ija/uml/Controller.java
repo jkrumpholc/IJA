@@ -8,8 +8,11 @@ import com.jfoenix.controls.JFXButton;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import javafx.util.converter.CurrencyStringConverter;
 import javafx.scene.control.ScrollPane;
 
 
@@ -26,6 +29,10 @@ public class Controller {
     private Pane dt_pane;
     @FXML
     private ScrollPane dt_scroll;
+    @FXML
+    private AnchorPane center;
+    @FXML
+    private VBox left_menu;
 
 
     @FXML
@@ -58,5 +65,13 @@ public class Controller {
         i++;
     }
     
+    @FXML
+    public void open() {
+        CenterPaneUI s_diagram = new CenterPaneUI();
+        center.getChildren().add(s_diagram);
+        JFXButton sd_button = new JFXButton();
+        sd_button.setText("sekvenční diagram x");
+        left_menu.getChildren().add(sd_button);
+    }
  
 }
