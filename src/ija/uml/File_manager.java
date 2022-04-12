@@ -1,3 +1,7 @@
+// autor: Jan Krumpholc             //
+// login: xkrump02                  //
+// zpracovani souboru               //
+
 package ija.uml;
 
 import java.io.File;
