@@ -6,12 +6,12 @@ package ija.uml;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 
-public class CenterPaneUI extends ScrollPane {
+public class EditUI extends AnchorPane {
     
-    public CenterPaneUI() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("center_pane_ui.fxml"));
+    public EditUI() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("edit_ui.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

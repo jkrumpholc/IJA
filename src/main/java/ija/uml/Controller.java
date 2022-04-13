@@ -12,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-import javafx.util.converter.CurrencyStringConverter;
 import javafx.scene.control.ScrollPane;
 
 
@@ -74,4 +73,9 @@ public class Controller {
         left_menu.getChildren().add(sd_button);
     }
  
+    @FXML
+    public void edit() {
+        EditUI edit = new EditUI();
+        dt_pane.getChildren().add(edit);
+    }
 }
