@@ -4,7 +4,14 @@
 
 package ija.uml;
 
+import java.io.IOException;
+
 import com.jfoenix.controls.JFXButton;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -75,7 +82,16 @@ public class Controller {
  
     @FXML
     public void edit() {
-        EditUI edit = new EditUI();
-        dt_pane.getChildren().add(edit);
+        Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("edit_window.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("My New Stage Title");
+                stage.setScene(new Scene(root, 300, 400));
+                stage.show();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 }
