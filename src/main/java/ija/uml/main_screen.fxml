@@ -17,6 +17,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.uml.Controller">
     <center>
@@ -68,6 +70,11 @@
                 <Menu mnemonicParsing="false" text="Editovat">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Editovat" onAction="#edit"/>
+                    </items>
+                </Menu>
+                <Menu>
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Přidat"/>
                     </items>
                 </Menu>
             </menus>

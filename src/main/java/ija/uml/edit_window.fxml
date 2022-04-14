@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="edit_window" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane fx:id="edit_window" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <GridPane prefHeight="400.0" prefWidth="300.0">
             <columnConstraints>
@@ -51,7 +51,7 @@
                 <Button mnemonicParsing="false" text="Odstranit třídu" GridPane.rowIndex="4" />
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                    <image>
-                      <Image url="@icons-close.png" />
+                      <Image url="@../../../../../.lib/icons-close.png" />
                    </image>
                    <GridPane.margin>
                       <Insets left="10.0" />
