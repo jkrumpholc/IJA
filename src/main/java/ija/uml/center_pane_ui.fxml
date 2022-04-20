@@ -7,8 +7,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.Pane?>
 
-<fx:root type="javafx.scene.control.ScrollPane" xmlns:fx="http://javafx.com/fxml">
+<fx:root type="javafx.scene.control.ScrollPane" xmlns:fx="http://javafx.com/fxml" prefHeight="575.0" prefWidth="600.0" styleClass="gray">
     <content>
-        <Pane fx:id="sd_pane" />
+        <Pane />
     </content>
 </fx:root>
