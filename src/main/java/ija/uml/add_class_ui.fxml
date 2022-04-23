@@ -30,7 +30,6 @@
               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
              <children>
-                <Button mnemonicParsing="false" text="Potvrdit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <Label text="Název ">
                    <font>
                       <Font size="14.0" />
@@ -48,15 +47,12 @@
                    </GridPane.margin></TextField>
                 <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <Button mnemonicParsing="false" text="Odstranit třídu" GridPane.rowIndex="4" />
-                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                   <image>
-                      <Image url="@../../../../../.lib/icons-close.png" />
-                   </image>
-                   <GridPane.margin>
-                      <Insets left="10.0" />
-                   </GridPane.margin>
-                </ImageView>
+                <Button mnemonicParsing="false" text="Přidat třídu" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ImageView fitHeight="53.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../../../../../.lib/icons-plus.png" />
+               </image>
+            </ImageView>
              </children>
              <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

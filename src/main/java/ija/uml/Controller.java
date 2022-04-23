@@ -67,26 +67,42 @@ public class Controller implements EventHandler<ActionEvent> {
     @FXML
     public void sd() {
         CenterPaneUI s_diagram = new CenterPaneUI();
-        s_diagram.setId("i");
+        String id = Integer.toString(i);
+        s_diagram.setId(id);
         s_diagrams_array.add(s_diagram);
         center.getChildren().add(s_diagram);
         sd_button = new JFXButton();
         sd_button.setText("sekvenční diagram x");
         sd_button.setPrefWidth(200);
         sd_button.setOnAction(this); 
-        sd_button.setId("i");
+        sd_button.setId(id);
         left_menu.getChildren().add(sd_button);
         i++;
     }
 
  
     @FXML
-    public void add_class() {
+    public void addClassWindow() {
+        Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("add_class_ui.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Přidat třídu");
+                stage.setScene(new Scene(root, 300, 400));
+                stage.show();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+    
+    @FXML
+    public void editClass() {
         Parent root;
             try {
                 root = FXMLLoader.load(getClass().getResource("edit_window.fxml"));
                 Stage stage = new Stage();
-                stage.setTitle("My New Stage Title");
+                stage.setTitle("Upravit třídu");
                 stage.setScene(new Scene(root, 300, 400));
                 stage.show();
             }
