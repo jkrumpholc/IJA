@@ -24,11 +24,6 @@
     <center>
         <AnchorPane fx:id="center" prefHeight="575.0" prefWidth="600.0" styleClass="gray" BorderPane.alignment="CENTER">
             <children>
-                <ScrollPane fx:id="dt_scroll" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <content>
-                        <Pane fx:id="dt_pane" />
-                    </content>
-                </ScrollPane>
             </children>
         </AnchorPane>
     </center>
@@ -37,8 +32,8 @@
             <children>
                 <VBox fx:id="left_menu" prefHeight="500.0" prefWidth="200.0">
                     <children>
-                        <Button fx:id="test_button" mnemonicParsing="false" onAction="#addClass" text="Test přidání třídy" />
-                        <JFXButton fx:id="dt_button" onAction="#handle" prefWidth="200.0" text="Diagram tříd" >
+                        <Button fx:id="test_button" mnemonicParsing="false"  text="Test přidání třídy" />  <!-- onAction="#addClass" -->
+                        <JFXButton fx:id="c_diagram_button" onAction="#handle" prefWidth="200.0" text="Diagram tříd" >
                             <font>
                                 <Font size="13.0" />
                             </font>
@@ -51,8 +46,6 @@
                                 <Insets left="8.0" />
                             </padding>
                         </Label>
-                        <JFXButton fx:id="y" prefWidth="200.0" text="Sekvenčí diagram 1" /> <!-- TODO smazat -->
-                        <JFXButton fx:id="z" prefWidth="200.0" text="Sekvenčí diagram 2" /> <!-- TODO smazat -->
                     </children>
                 </VBox>
             </children>
@@ -64,7 +57,6 @@
                 <Menu mnemonicParsing="false" text="Soubor">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Otevřít" onAction="#open" />
-                        <MenuItem mnemonicParsing="false" text="Přidat s diagram" onAction="#sd" /> <!-- TODO smazat -->
                         <MenuItem mnemonicParsing="false" text="Uložit jako" />
                     </items>
                 </Menu>

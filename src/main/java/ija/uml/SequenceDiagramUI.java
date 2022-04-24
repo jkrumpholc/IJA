@@ -8,9 +8,9 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 
-public class CenterPaneUI extends ScrollPane {
+public class SequenceDiagramUI extends ScrollPane {
     
-    public CenterPaneUI() {
+    public SequenceDiagramUI() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("center_pane_ui.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
