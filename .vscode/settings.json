@@ -3,7 +3,7 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "../javafx-sdk-17.0.2/lib/**/*.jar",
-        "../jfoenix-9.0.10.jar"
+        "../../javafx-sdk-17.0.2/lib/**/*.jar",
+        "../../jfoenix-9.0.10.jar"
     ]
 }

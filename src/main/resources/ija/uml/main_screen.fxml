@@ -17,6 +17,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.uml.Controller">
     <center>
@@ -36,7 +38,7 @@
                 <VBox fx:id="left_menu" prefHeight="500.0" prefWidth="200.0">
                     <children>
                         <Button fx:id="test_button" mnemonicParsing="false" onAction="#addClass" text="Test přidání třídy" />
-                        <JFXButton onAction="#hendleButtonAction" prefWidth="200.0" text="Diagram tříd" fx:id="x">
+                        <JFXButton fx:id="dt_button" onAction="#handle" prefWidth="200.0" text="Diagram tříd" >
                             <font>
                                 <Font size="13.0" />
                             </font>
@@ -49,8 +51,8 @@
                                 <Insets left="8.0" />
                             </padding>
                         </Label>
-                        <JFXButton fx:id="y" onAction="#hendleButtonAction" prefWidth="200.0" text="Sekvenčí diagram 1" />
-                        <JFXButton fx:id="z" onAction="#hendleButtonAction" prefWidth="200.0" text="Sekvenčí diagram 2" />
+                        <JFXButton fx:id="y" prefWidth="200.0" text="Sekvenčí diagram 1" /> <!-- TODO smazat -->
+                        <JFXButton fx:id="z" prefWidth="200.0" text="Sekvenčí diagram 2" /> <!-- TODO smazat -->
                     </children>
                 </VBox>
             </children>
@@ -62,12 +64,14 @@
                 <Menu mnemonicParsing="false" text="Soubor">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Otevřít" onAction="#open" />
+                        <MenuItem mnemonicParsing="false" text="Přidat s diagram" onAction="#sd" /> <!-- TODO smazat -->
                         <MenuItem mnemonicParsing="false" text="Uložit jako" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Editovat">
+                <Menu mnemonicParsing="false" text="Přidat">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" text="Přidat třídu" onAction="#addClassWindow"/>
+                        <MenuItem mnemonicParsing="false" text="Přidat operaci"/>
                     </items>
                 </Menu>
             </menus>
