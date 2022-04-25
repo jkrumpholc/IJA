@@ -11,9 +11,9 @@ import com.jfoenix.controls.JFXButton;
 
 import ija.uml.items.ClassDiagram;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
@@ -26,10 +26,10 @@ import java.util.ArrayList;
 public class Controller implements EventHandler<ActionEvent> {
 
     ClassDiagram classDiagram;
-    ArrayList<SequenceDiagramUI> s_diagrams_array = new ArrayList<SequenceDiagramUI>(); 
+    ArrayList<SequenceDiagramUI> s_diagrams_array; 
     int id_sd = 0;
     JFXButton sd_button;
-    ClassDiagramUI c_diagram;
+    ClassDiagramUI c_diagram_UI;
     
 
     @FXML
@@ -39,16 +39,26 @@ public class Controller implements EventHandler<ActionEvent> {
     @FXML
     private VBox left_menu;
     
+    @FXML
+    public void initialize() {
+        classDiagram = new ClassDiagram("New");
+        s_diagrams_array = new ArrayList<SequenceDiagramUI>();
+        c_diagram_UI = new ClassDiagramUI(classDiagram); 
+        center.getChildren().add(c_diagram_UI); 
+    }
 
     @FXML
     public void addClassWindow() {
-        Parent root;
             try {
-                root = FXMLLoader.load(getClass().getResource("add_class_ui.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("add_class_ui.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Přidat třídu");
-                stage.setScene(new Scene(root, 300, 400));
-                stage.show();
+                stage.setScene(new Scene(loader.load(), 300, 400));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                AddClassUI controller = loader.getController();
+                controller.setClassDiagram(classDiagram);
+                stage.showAndWait();
+                c_diagram_UI.draw();
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -65,8 +75,6 @@ public class Controller implements EventHandler<ActionEvent> {
             System.out.println("Chyba při otevření souboru");
         }
 
-        ClassDiagramUI c_diagram = new ClassDiagramUI(classDiagram); 
-        center.getChildren().add(c_diagram);
 
         SequenceDiagramUI s_diagram = new SequenceDiagramUI();
         String id = Integer.toString(id_sd);
@@ -86,7 +94,7 @@ public class Controller implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         if(event.getSource() == c_diagram_button) {
-            c_diagram.toFront();
+            c_diagram_UI.toFront();
         }
         if(event.getSource() == sd_button){
             JFXButton sd_button = (JFXButton) event.getTarget();

@@ -6,7 +6,7 @@ import java.util.List;
 public class ClassDiagram extends Element{
     ClassDiagram diagram;
     String name;
-    List<UMLClass> classes;
+    public List<UMLClass> classes;
     List<UMLClassifier> classifiers;
     public ClassDiagram(String name) {
         super(name);
