@@ -53,7 +53,7 @@ public class Controller implements EventHandler<ActionEvent> {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("add_class_ui.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Přidat třídu");
-                stage.setScene(new Scene(loader.load(), 300, 400));
+                stage.setScene(new Scene(loader.load(), 400, 400));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 AddClassUI controller = loader.getController();
                 controller.setClassDiagram(classDiagram);
