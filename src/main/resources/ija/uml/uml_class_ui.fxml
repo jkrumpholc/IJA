@@ -13,6 +13,6 @@
    <children>
       <Button fx:id="class_button" minWidth="100.0" mnemonicParsing="false" onAction="#editClass" /> 
       <ListView fx:id="attributes" prefHeight="200.0" prefWidth="200.0" />
-      <ListView prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="operation" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </fx:root>

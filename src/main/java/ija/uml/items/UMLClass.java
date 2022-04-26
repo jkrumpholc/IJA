@@ -6,15 +6,12 @@ import java.util.List;
 
 public class UMLClass extends UMLClassifier{
     UMLClass umlClass;
-    String name;
     Boolean isAbstract;
     List<UMLAttribute> attribute_list;
-    Integer pos_x;
-    Integer pos_y;
+    List<UMLOperation> operation_list;
     public UMLClass(String name) {
         super(name);
         umlClass = this;
-        umlClass.name = name;
         umlClass.isAbstract = false;
         umlClass.attribute_list = new ArrayList<>();
     }
@@ -22,9 +19,9 @@ public class UMLClass extends UMLClassifier{
     public UMLClass(String name, boolean defined) {
         super(name, defined);
         umlClass = this;
-        umlClass.name = name;
         umlClass.isAbstract = false;
         umlClass.attribute_list = new ArrayList<>();
+        umlClass.operation_list = new ArrayList<>();
     }
 
     public void setAbstract(boolean b) {
@@ -67,5 +64,20 @@ public class UMLClass extends UMLClassifier{
 
     public List<UMLAttribute> getAttributes() {
         return Collections.unmodifiableList(attribute_list);
+    }
+
+    public void delAttributesOperation() {
+        attribute_list.clear();
+        operation_list.clear();
+    }
+
+    public void addOperation(UMLOperation meth) {
+        if (!umlClass.operation_list.contains(meth)){
+            umlClass.operation_list.add(meth);
+        }
+    }
+
+    public List<UMLOperation> getOperation() {
+        return Collections.unmodifiableList(operation_list);
     }
 }

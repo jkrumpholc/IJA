@@ -50,15 +50,15 @@ public class Controller implements EventHandler<ActionEvent> {
     @FXML
     public void addClassWindow() {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("add_class_ui.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("add_edit_ui.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Přidat třídu");
                 stage.setScene(new Scene(loader.load(), 400, 400));
                 stage.initModality(Modality.APPLICATION_MODAL);
-                AddClassUI controller = loader.getController();
-                controller.setClassDiagram(classDiagram);
+                AddEditUI controller = loader.getController();
+                controller.init(classDiagram, false, null);
                 stage.showAndWait();
-                c_diagram_UI.draw();
+                c_diagram_UI.draw(); //vykresledni diagramu trid
             }
             catch (IOException e) {
                 e.printStackTrace();
