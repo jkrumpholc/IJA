@@ -66,6 +66,24 @@ public class Controller implements EventHandler<ActionEvent> {
     }
 
     @FXML
+    public void addRelWindow() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("add_edit_rel_ui.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Vztahy");
+                stage.setScene(new Scene(loader.load(), 400, 400));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                AddEditRelUI controller = loader.getController();
+                controller.init(classDiagram);
+                stage.showAndWait();
+                c_diagram_UI.draw(); //vykresledni diagramu trid
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    @FXML
     public void open() {
         FileChooser file_chooser = new FileChooser();
         File selected_file = file_chooser.showOpenDialog(null);

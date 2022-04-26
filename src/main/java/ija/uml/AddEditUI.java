@@ -94,6 +94,7 @@ public class AddEditUI {
         int index = attr_list.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
             attr_list.getItems().remove(index);
+            attrs.remove(index);
         }
     }
 
@@ -109,6 +110,7 @@ public class AddEditUI {
         int index = meth_list.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
             meth_list.getItems().remove(index);
+            meths.remove(index);
         }
     } 
 }

@@ -31,8 +31,7 @@
             <children>
                 <VBox fx:id="left_menu" prefHeight="500.0" prefWidth="200.0">
                     <children>
-                        <Button fx:id="test_button" mnemonicParsing="false"  text="Test přidání třídy" />  <!-- onAction="#addClass" -->
-                        <JFXButton fx:id="c_diagram_button" onAction="#handle" prefWidth="200.0" text="Diagram tříd" >
+                        <JFXButton fx:id="c_diagram_button" id="x" onAction="#handle" prefWidth="200.0" text="Diagram tříd" >
                             <font>
                                 <Font size="13.0" />
                             </font>
@@ -62,7 +61,7 @@
                 <Menu mnemonicParsing="false" text="Přidat">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Přidat třídu" onAction="#addClassWindow"/>
-                        <MenuItem mnemonicParsing="false" text="Přidat operaci"/>
+                        <MenuItem mnemonicParsing="false" text="Přidat vztah" onAction="#addRelWindow"/>
                     </items>
                 </Menu>
             </menus>

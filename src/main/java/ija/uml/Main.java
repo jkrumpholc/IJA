@@ -20,6 +20,7 @@ public class Main extends Application {
         primaryStage.setScene(scene); 
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         primaryStage.show();
+        root.requestFocus();
     }
 
 

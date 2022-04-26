@@ -31,8 +31,9 @@
     -fx-background-color: #D6DBDF; 
 }
 
+/*TODO vymazat*/
 #x
 {
-    -fx-alignment: LEFT;
+    -fx-alignment: CENTER_LEFT;
 }
 

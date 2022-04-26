@@ -1,6 +1,7 @@
 package ija.uml.items;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ClassDiagram extends Element{
@@ -8,11 +9,13 @@ public class ClassDiagram extends Element{
     String name;
     public List<UMLClass> classes;
     List<UMLClassifier> classifiers;
+    List<UMLRelation> relations;
     public ClassDiagram(String name) {
         super(name);
         diagram = this;
         diagram.name = name;
         diagram.classes = new ArrayList<>();
+        diagram.relations = new ArrayList<>();
         diagram.classifiers = new ArrayList<>();
     }
 
@@ -21,6 +24,18 @@ public class ClassDiagram extends Element{
         diagram.classes.add(umlClass);
         diagram.classifiers.add(umlClass.umlClassifier);
         return umlClass;
+    }
+
+    public void addRelation(UMLRelation rel) {
+        diagram.relations.add(rel);
+    }
+
+    public void clearRelations() {
+        diagram.relations.clear();
+    }
+
+    public List<UMLRelation> getRelations() {
+        return Collections.unmodifiableList(relations);
     }
 
     public UMLClassifier findClassifier(String name) {

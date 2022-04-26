@@ -28,9 +28,12 @@ public class UMLClassUI extends VBox {
     @FXML
     private ListView<String> attributes, operation;
     UMLClass umlClass;
+    private double x_pos, y_pos;
 
-    public UMLClassUI(UMLClass umlClass) {
+    public UMLClassUI(UMLClass umlClass, double x_pos, double y_pos) {
         this.umlClass = umlClass;
+        this.x_pos = x_pos;
+        this.y_pos = y_pos;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("uml_class_ui.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);

@@ -5,10 +5,8 @@
 package ija.uml;
 
 import java.io.IOException;
-import java.util.List;
 
 import ija.uml.items.ClassDiagram;
-import ija.uml.items.UMLAttribute;
 import ija.uml.items.UMLClass;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
@@ -20,6 +18,9 @@ public class ClassDiagramUI extends ScrollPane {
     ClassDiagram classDiagram;
     double x_pos = 10; 
     double y_pos = 5; 
+    double x_space = 170;
+    double width = 150;
+    double point_space = 20;
     boolean first_class = true;
 
     @FXML
@@ -50,16 +51,13 @@ public class ClassDiagramUI extends ScrollPane {
     
     @FXML
     public void addClass(UMLClass umlClass) {
-        UMLClassUI umlClassUI = new UMLClassUI(umlClass);
+        UMLClassUI umlClassUI = new UMLClassUI(umlClass, x_pos, y_pos);
         umlClassUI.setLayoutX(x_pos);
         umlClassUI.setLayoutY(y_pos);
         center_pane.getChildren().add(umlClassUI);
-        /* if (!first_class) {
-            Line line = new Line(x_pos, 80, x_pos - 20, 80);
-            this.getChildren().add(line);
-        } */
-       
-        x_pos += 120;
+        x_pos += x_space;
         first_class = false;
     } 
+
+    
 }
