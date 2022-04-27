@@ -1,3 +1,7 @@
+// autor: Tereza Buchníčková        //
+// login: xbuchn00                  //
+//      //
+
 package ija.uml;
 
 import java.util.ArrayList;

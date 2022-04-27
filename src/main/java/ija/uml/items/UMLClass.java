@@ -9,6 +9,10 @@ public class UMLClass extends UMLClassifier{
     Boolean isAbstract;
     List<UMLAttribute> attribute_list;
     List<UMLOperation> operation_list;
+    double x_pos;
+    double y_pos;
+    int rel_start_pos = 1;
+
     public UMLClass(String name) {
         super(name);
         umlClass = this;
@@ -79,5 +83,26 @@ public class UMLClass extends UMLClassifier{
 
     public List<UMLOperation> getOperation() {
         return Collections.unmodifiableList(operation_list);
+    }
+
+    public void setPosition(double x_pos, double y_pos) {
+        this.x_pos = x_pos;
+        this.y_pos = y_pos;
+    }
+
+    public double getXPosition() {
+        return x_pos;
+    }
+
+    public double getYPosition() {
+        return y_pos;
+    }
+
+    public void setStart(int  rel_start_pos) {
+        this.rel_start_pos = rel_start_pos;
+    }
+
+    public int getStart() {
+        return rel_start_pos;
     }
 }

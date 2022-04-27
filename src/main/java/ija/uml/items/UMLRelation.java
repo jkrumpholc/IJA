@@ -1,3 +1,7 @@
+// autor: Tereza Buchníčková        //
+// login: xbuchn00                  //
+//      //
+
 package ija.uml.items;
 
 public class UMLRelation {
@@ -35,4 +39,12 @@ public class UMLRelation {
         }
         return strType + ": " + classFrom + " -> " + classTo;
     }
+    
+    public String getClassFrom() {
+            return classFrom;
+    }
+
+    public String getClassTo() {
+        return classTo;
+}
 }
