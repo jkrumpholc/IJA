@@ -17,11 +17,11 @@ public class SequenceDiagram extends Element {
         super(name);
     }
 
-    public UMLObject createObject(String name) {
-        //UMLObject umlObject = new UMLObject(name);
+    /* public UMLObject createObject(String name) {
+        UMLObject umlObject = new UMLObject(name);
         this.listObject.add(umlObject);
         return umlObject;
-    }
+    } */
 
     /* public void addRelation(UMLRelation rel) {
         diagram.relations.add(rel);

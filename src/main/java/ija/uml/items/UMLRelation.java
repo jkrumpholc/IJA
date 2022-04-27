@@ -46,5 +46,9 @@ public class UMLRelation {
 
     public String getClassTo() {
         return classTo;
-}
+    }  
+    
+    public RelType getType() {
+        return type;
+    } 
 }

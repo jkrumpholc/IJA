@@ -9,10 +9,13 @@ import java.io.IOException;
 import ija.uml.items.ClassDiagram;
 import ija.uml.items.UMLClass;
 import ija.uml.items.UMLRelation;
+import ija.uml.items.UMLRelation.RelType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.fxml.FXML;
 
 public class ClassDiagramUI extends ScrollPane {
@@ -45,9 +48,14 @@ public class ClassDiagramUI extends ScrollPane {
     }
 
     public void draw() {
+        //TODO projit vsechny tridy a nastavit pocitadla do puvodni verze
+        center_pane.getChildren().clear();
+
+        for (UMLClass umlClass : classDiagram.classes) {
+             umlClass.setStart(1);
+        }
         x_pos = 10; 
         y_pos = 5; 
-        center_pane.getChildren().clear();
         for (UMLClass umlClass : classDiagram.classes) {
             addClass(umlClass);
         }
@@ -69,27 +77,93 @@ public class ClassDiagramUI extends ScrollPane {
     
     @FXML
     private void addRelation(UMLRelation umlRelation) {
+        RelType type = umlRelation.getType();
         UMLClass umlClass1 = classDiagram.findClass(umlRelation.getClassFrom());
         double x = umlClass1.getXPosition();
-        double y = umlClass1.getYPosition();
-        int startPos = umlClass1.getStart();
-        x = x + (startPos * point_space);
-        y = y + width;
+        int point = umlClass1.getStart();
+        x = x + (point * point_space); //x pozice zacatku cary
+        double y_end = y_pos + width; //konec ctverce 
 
-        Line line = new Line();
-        line.setStartX(x);
-        line.setStartY(y);
-        line.setEndX(x);
-        line.setEndY(y + 30);
-        
-        center_pane.getChildren().add(line);
+        Line line1 = new Line();
+        line1.setStartX(x);
+        line1.setStartY(y_end);
+        line1.setEndX(x);
+        double y_end_line = y_end + (20 * point);
+        line1.setEndY(y_end_line);
+        center_pane.getChildren().add(line1);
 
-        umlClass1.setStart(startPos + 1);
-
+        umlClass1.setStart(point + 1); //nastaveni mista, ze ktereho vychazi cara 
+ 
         UMLClass umlClass2 = classDiagram.findClass(umlRelation.getClassTo());
+        double x2 = umlClass2.getXPosition();
+        int point2 = umlClass2.getStart();
+        x2 = x2 + (point2 * point_space); //x pozice konce cary
+
+        Line line2 = new Line();
+        line2.setStartX(x);
+        line2.setStartY(y_end_line);
+        line2.setEndX(x2);
+        line2.setEndY(y_end_line);
+        center_pane.getChildren().add(line2);
+
+        Line line3 = new Line();
+        line3.setStartX(x2);
+        line3.setStartY(y_end_line);
+        line3.setEndX(x2);
+        y_end_line = y_end_line - (20 * point);
+        line3.setEndY(y_end_line);
+        center_pane.getChildren().add(line3);
+        //TODO vykresit neco na konec cary
+        if(type == RelType.ASSOC) {
+            Line arrow1 = new Line();
+            arrow1.setStartX(x2);
+            arrow1.setStartY(y_end_line);
+            arrow1.setEndX(x2 - 5);
+            arrow1.setEndY(y_end_line + 7);
+            center_pane.getChildren().add(arrow1);
+            Line arrow2 = new Line();
+            arrow2.setStartX(x2);
+            arrow2.setStartY(y_end_line);
+            arrow2.setEndX(x2 + 5);
+            arrow2.setEndY(y_end_line + 7);
+            center_pane.getChildren().add(arrow2);
+        }
+        if(type == RelType.COMPOS) {
+            Polygon polygon = new Polygon();
+            polygon.getPoints().addAll(new Double[]{
+            x2, y_end_line,
+            x2 - 5, y_end_line + 7,
+            x2, y_end_line + 14,
+            x2 + 5, y_end_line + 7});
+            polygon.setFill(Color.BLACK);
+            center_pane.getChildren().add(polygon);
+        }
+        if(type == RelType.AGGR) {
+            Polygon polygon = new Polygon();
+            polygon.getPoints().addAll(new Double[]{
+            x2, y_end_line,
+            x2 - 5, y_end_line + 7,
+            x2, y_end_line + 14,
+            x2 + 5, y_end_line + 7});
+            polygon.setFill(Color.WHITE);
+            polygon.setStroke(Color.BLACK);
+            center_pane.getChildren().add(polygon);
+        }
+        if(type == RelType.GENER) {
+            Polygon polygon = new Polygon();
+            polygon.getPoints().addAll(new Double[]{
+            x2, y_end_line,
+            x2 - 5, y_end_line + 7,
+            x2 + 5, y_end_line + 7 });
+            polygon.setFill(Color.WHITE);
+            polygon.setStroke(Color.BLACK);
+            center_pane.getChildren().add(polygon);
+        }
+        umlClass2.setStart(point2 + 1); 
     }
 
-    //TODO vyřešit kreslení čar ve více řadách
+    //TODO Nenajde to třídy, které byly editovány
+    //TODO Vyřešit když se dostanu za hranice třídy
 
     
 }
