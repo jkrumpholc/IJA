@@ -10,6 +10,7 @@ import java.io.IOException;
 import com.jfoenix.controls.JFXButton;
 
 import ija.uml.items.ClassDiagram;
+import ija.uml.items.SequenceDiagram;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
@@ -26,7 +27,8 @@ import java.util.ArrayList;
 public class Controller implements EventHandler<ActionEvent> {
 
     ClassDiagram classDiagram;
-    ArrayList<SequenceDiagramUI> s_diagrams_array; 
+    ArrayList<SequenceDiagramUI> s_diagrams_array_ui; 
+    ArrayList<SequenceDiagram> s_diagrams_array; 
     int id_sd = 0;
     JFXButton sd_button;
     ClassDiagramUI c_diagram_UI;
@@ -42,7 +44,8 @@ public class Controller implements EventHandler<ActionEvent> {
     @FXML
     public void initialize() {
         classDiagram = new ClassDiagram("New");
-        s_diagrams_array = new ArrayList<SequenceDiagramUI>();
+        s_diagrams_array_ui = new ArrayList<SequenceDiagramUI>();
+        s_diagrams_array = new ArrayList<SequenceDiagram>();
         c_diagram_UI = new ClassDiagramUI(classDiagram); 
         center.getChildren().add(c_diagram_UI); 
     }
@@ -84,6 +87,26 @@ public class Controller implements EventHandler<ActionEvent> {
     }
 
     @FXML
+    public void addObjWindow() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("add_obj_ui.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Přidání objektu");
+                stage.setScene(new Scene(loader.load(), 400, 400));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                AddObjUI controller = loader.getController();
+                //TODO poslat správný sekvenční diagram
+                controller.init(s_diagrams_array.get(0), classDiagram);
+                stage.showAndWait();
+                s_diagrams_array_ui.get(0).draw(); //vykresledni diagramu trid
+                //TODO poslat správný sekvenční diagram UI
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    @FXML
     public void open() {
         FileChooser file_chooser = new FileChooser();
         File selected_file = file_chooser.showOpenDialog(null);
@@ -93,12 +116,14 @@ public class Controller implements EventHandler<ActionEvent> {
             System.out.println("Chyba při otevření souboru");
         }
 
-
-        SequenceDiagramUI s_diagram = new SequenceDiagramUI();
-        String id = Integer.toString(id_sd);
-        s_diagram.setId(id);
+        
+        SequenceDiagram s_diagram = new SequenceDiagram("Sequence Diagram", id_sd);
         s_diagrams_array.add(s_diagram);
-        center.getChildren().add(s_diagram);
+        SequenceDiagramUI s_diagram_ui = new SequenceDiagramUI(s_diagram);
+        String id = Integer.toString(id_sd);
+        s_diagram_ui.setId(id);
+        s_diagrams_array_ui.add(s_diagram_ui);
+        center.getChildren().add(s_diagram_ui);
         sd_button = new JFXButton();
         sd_button.setText("sekvenční diagram x");
         sd_button.setPrefWidth(200);
@@ -116,7 +141,7 @@ public class Controller implements EventHandler<ActionEvent> {
         }
         if(event.getSource() == sd_button){
             JFXButton sd_button = (JFXButton) event.getTarget();
-            for (SequenceDiagramUI sd: s_diagrams_array) {
+            for (SequenceDiagramUI sd: s_diagrams_array_ui) {
                 if (sd.getId() == sd_button.getId()) {
                     sd.toFront();
                 }

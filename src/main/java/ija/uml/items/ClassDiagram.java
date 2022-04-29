@@ -38,6 +38,10 @@ public class ClassDiagram extends Element{
         return Collections.unmodifiableList(relations);
     }
 
+    public List<UMLClass> getClasses() {
+        return Collections.unmodifiableList(classes);
+    }
+
     public UMLClassifier findClassifier(String name) {
         for (UMLClassifier classifier: diagram.classifiers){
             if (classifier.name.equals(name)){

@@ -7,10 +7,6 @@ package ija.uml;
 import java.util.ArrayList;
 
 import ija.uml.items.ClassDiagram;
-import ija.uml.items.UMLAttribute;
-import ija.uml.items.UMLClass;
-import ija.uml.items.UMLClassifier;
-import ija.uml.items.UMLOperation;
 import ija.uml.items.UMLRelation;
 import ija.uml.items.UMLRelation.RelType;
 import javafx.collections.FXCollections;

@@ -62,6 +62,7 @@
                     <items>
                         <MenuItem mnemonicParsing="false" text="Přidat třídu" onAction="#addClassWindow"/>
                         <MenuItem mnemonicParsing="false" text="Přidat vztah" onAction="#addRelWindow"/>
+                        <MenuItem mnemonicParsing="false" text="Přidat objekt" onAction="#addObjWindow"/>
                     </items>
                 </Menu>
             </menus>

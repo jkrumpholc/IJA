@@ -48,7 +48,6 @@ public class ClassDiagramUI extends ScrollPane {
     }
 
     public void draw() {
-        //TODO projit vsechny tridy a nastavit pocitadla do puvodni verze
         center_pane.getChildren().clear();
 
         for (UMLClass umlClass : classDiagram.classes) {
@@ -99,11 +98,7 @@ public class ClassDiagramUI extends ScrollPane {
         int point2 = umlClass2.getStart();
         x2 = x2 + (point2 * point_space); //x pozice konce cary
 
-        Line line2 = new Line();
-        line2.setStartX(x);
-        line2.setStartY(y_end_line);
-        line2.setEndX(x2);
-        line2.setEndY(y_end_line);
+        Line line2 = new Line(x, y_end_line, x2, y_end_line);
         center_pane.getChildren().add(line2);
 
         Line line3 = new Line();
@@ -113,7 +108,6 @@ public class ClassDiagramUI extends ScrollPane {
         y_end_line = y_end_line - (20 * point);
         line3.setEndY(y_end_line);
         center_pane.getChildren().add(line3);
-        //TODO vykresit neco na konec cary
         if(type == RelType.ASSOC) {
             Line arrow1 = new Line();
             arrow1.setStartX(x2);

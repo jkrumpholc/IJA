@@ -12,21 +12,16 @@ public class SequenceDiagram extends Element {
 
     ArrayList<UMLObject> listObject = new ArrayList<UMLObject>();
     ArrayList<UMLMessage> listMessages = new ArrayList<UMLMessage>();
+    int id;
 
-    public SequenceDiagram(String name) {
+    public SequenceDiagram(String name, int id) {
         super(name);
+        this.id = id;
     }
 
-    /* public UMLObject createObject(String name) {
-        UMLObject umlObject = new UMLObject(name);
-        this.listObject.add(umlObject);
-        return umlObject;
-    } */
-
-    /* public void addRelation(UMLRelation rel) {
-        diagram.relations.add(rel);
-    }
- */
+    public void addObject(UMLObject obj) {
+        listObject.add(obj);
+    } 
 
     public java.util.List<UMLMessage> getMessages() {
         return Collections.unmodifiableList(listMessages);
