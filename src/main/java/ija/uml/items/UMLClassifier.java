@@ -2,18 +2,15 @@ package ija.uml.items;
 
 public class UMLClassifier extends Element{
     UMLClassifier umlClassifier;
-    String name;
     Boolean isUserDefined;
     public UMLClassifier(String name, Boolean isUserDefined) {
         super(name);
         umlClassifier = this;
-        umlClassifier.name = name;
         umlClassifier.isUserDefined = isUserDefined;
     }
     public UMLClassifier(String name){
         super(name);
         umlClassifier = this;
-        umlClassifier.name = name;
         umlClassifier.isUserDefined = true;
     }
 

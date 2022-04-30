@@ -23,11 +23,19 @@ public class SequenceDiagram extends Element {
         listObject.add(obj);
     } 
 
+    public void addMessage(UMLMessage mes) {
+        listMessages.add(mes);
+    } 
+
     public java.util.List<UMLMessage> getMessages() {
         return Collections.unmodifiableList(listMessages);
     }
 
     public List<UMLObject> getObjects() {
         return Collections.unmodifiableList(listObject);
+    }
+
+    public void clearMessages() {
+        this.listMessages.clear();
     }
 }

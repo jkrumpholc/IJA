@@ -6,7 +6,6 @@ import ija.uml.items.ClassDiagram;
 import ija.uml.items.SequenceDiagram;
 import ija.uml.items.UMLClass;
 import ija.uml.items.UMLObject;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -37,6 +36,7 @@ public class AddObjUI {
             
             uml_class.getItems().add(name);
         }
+        //TODO nacist existujici objekty
     }  
 
     @FXML
@@ -49,6 +49,7 @@ public class AddObjUI {
     void save_obj() {
         Stage stage = (Stage) save.getScene().getWindow();
         stage.close();
+        //TODO clear objects
         for (UMLObject obj : objects) {
             sequenceDiagram.addObject(obj);
         }

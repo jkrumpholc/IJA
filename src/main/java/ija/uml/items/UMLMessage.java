@@ -1,10 +1,10 @@
 package ija.uml.items;
 
 
-public class UMLMessage extends Element {
+public class UMLMessage {
 
     public enum MesType {
-        SAYN,
+        SYNC,
         ASYN,
         REPLY,
         CREATE,
@@ -14,10 +14,31 @@ public class UMLMessage extends Element {
     UMLClass classFrom;
     UMLClass classTo;
 
-    public UMLMessage(String name, UMLClass classFrom, UMLClass classTo) {
-        super(name);
+    public UMLMessage(MesType type, UMLClass classFrom, UMLClass classTo) {
         this.classFrom = classFrom;
         this.classTo = classTo;
+    }
+
+    public String toString() {
+        String strType;
+        switch (type) {
+            case SYNC:
+                strType = "Synchronní";
+                break;
+            case ASYN:
+                strType = "Asynchronní";
+                break;
+            case REPLY:
+                strType = "Návrat";
+                break;
+            case CREATE:
+                strType = "Vytvoření objektu";
+                break;
+        default:
+                strType = "Zánik objektu";
+                break;
+        }
+        return strType + ": " + classFrom + " -> " + classTo;
     }
 }
 

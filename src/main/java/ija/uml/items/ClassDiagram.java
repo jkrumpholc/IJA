@@ -7,7 +7,7 @@ import java.util.List;
 public class ClassDiagram extends Element{
     ClassDiagram diagram;
     String name;
-    public List<UMLClass> classes;
+    List<UMLClass> classes;
     List<UMLClassifier> classifiers;
     List<UMLRelation> relations;
     public ClassDiagram(String name) {

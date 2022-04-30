@@ -54,6 +54,7 @@ public class SequenceDiagramUI extends ScrollPane {
 
     public void drawObj(UMLObject object) {
         TextArea umlObject = new TextArea(object.getName());
+        //TODO přidat typ
         umlObject.setEditable(false);
         umlObject.setPrefSize(80, 20);
         umlObject.setLayoutX(x_pos);

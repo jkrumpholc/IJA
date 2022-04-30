@@ -9,4 +9,5 @@ public class UMLObject extends Element {
         this.umlClass = umlClass;
         this.autCreate = autCreate;
     }
+    //TODO toString
 }

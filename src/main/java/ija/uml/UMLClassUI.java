@@ -5,7 +5,6 @@
 package ija.uml;
 
 import java.io.IOException;
-import java.util.List;
 
 import ija.uml.items.UMLAttribute;
 import ija.uml.items.UMLClass;

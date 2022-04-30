@@ -12,9 +12,9 @@ public class UMLRelation {
         GENER
     }
     RelType type;
-    String classFrom;
-    String classTo;
-    public UMLRelation(RelType type, String classFrom, String classTo) {
+    UMLClass classFrom;
+    UMLClass classTo;
+    public UMLRelation(RelType type, UMLClass classFrom, UMLClass classTo) {
         this.type = type;
         this.classFrom = classFrom;
         this.classTo = classTo;
@@ -40,11 +40,11 @@ public class UMLRelation {
         return strType + ": " + classFrom + " -> " + classTo;
     }
     
-    public String getClassFrom() {
+    public UMLClass getClassFrom() {
             return classFrom;
     }
 
-    public String getClassTo() {
+    public UMLClass getClassTo() {
         return classTo;
     }  
     

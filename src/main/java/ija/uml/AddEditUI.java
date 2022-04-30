@@ -104,7 +104,7 @@ public class AddEditUI {
 
     @FXML
     void meth_add() {
-        UMLOperation meth = new UMLOperation(meth_name.getText(), new UMLClassifier(meth_type.getText())); //TODO přepsat
+        UMLOperation meth = new UMLOperation(meth_name.getText(), new UMLClassifier(meth_type.getText())); 
         meths.add(meth);
         meth_list.getItems().add(meth.toString()); //pridani metody do seznamu
     }    

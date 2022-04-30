@@ -7,12 +7,12 @@ package ija.uml;
 import java.io.File;
 import java.io.IOException;
 
-import com.jfoenix.controls.JFXButton;
-
 import ija.uml.items.ClassDiagram;
 import ija.uml.items.SequenceDiagram;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,13 +29,14 @@ public class Controller implements EventHandler<ActionEvent> {
     ClassDiagram classDiagram;
     ArrayList<SequenceDiagramUI> s_diagrams_array_ui; 
     ArrayList<SequenceDiagram> s_diagrams_array; 
-    int id_sd = 0;
-    JFXButton sd_button;
+    int idSeqDiag = 1;
+    int activeDiag = 0;
     ClassDiagramUI c_diagram_UI;
+    ToggleGroup buttonGroup;
     
 
     @FXML
-    private JFXButton c_diagram_button;
+    private ToggleButton c_diagram_button;
     @FXML
     private AnchorPane center;
     @FXML
@@ -48,6 +49,10 @@ public class Controller implements EventHandler<ActionEvent> {
         s_diagrams_array = new ArrayList<SequenceDiagram>();
         c_diagram_UI = new ClassDiagramUI(classDiagram); 
         center.getChildren().add(c_diagram_UI); 
+        buttonGroup = new ToggleGroup();
+        c_diagram_button.setToggleGroup(buttonGroup);
+        c_diagram_button.setSelected(true);
+        activeDiag = 0;
     }
 
     @FXML
@@ -71,13 +76,13 @@ public class Controller implements EventHandler<ActionEvent> {
     @FXML
     public void addRelWindow() {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("add_edit_rel_ui.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("add_mess_rel_ui.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Vztahy");
                 stage.setScene(new Scene(loader.load(), 400, 400));
                 stage.initModality(Modality.APPLICATION_MODAL);
-                AddEditRelUI controller = loader.getController();
-                controller.init(classDiagram);
+                AddMessRelUI controller = loader.getController();
+                controller.init(null, classDiagram, true);
                 stage.showAndWait();
                 c_diagram_UI.draw(); //vykresledni diagramu trid
             }
@@ -89,17 +94,41 @@ public class Controller implements EventHandler<ActionEvent> {
     @FXML
     public void addObjWindow() {
             try {
+                if (activeDiag == 0) {
+                    return;
+                }
+                int diagIndex = activeDiag - 1;
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("add_obj_ui.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Přidání objektu");
                 stage.setScene(new Scene(loader.load(), 400, 400));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 AddObjUI controller = loader.getController();
-                //TODO poslat správný sekvenční diagram
-                controller.init(s_diagrams_array.get(0), classDiagram);
+                controller.init(s_diagrams_array.get(diagIndex), classDiagram);
                 stage.showAndWait();
-                s_diagrams_array_ui.get(0).draw(); //vykresledni diagramu trid
-                //TODO poslat správný sekvenční diagram UI
+                s_diagrams_array_ui.get(diagIndex).draw(); //vykresledni sekvencniho diagramu
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    @FXML
+    public void addMessWindow() {
+            try {
+                if (activeDiag == 0) {
+                    return;
+                }
+                int diagIndex = activeDiag - 1;
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("add_mess_rel_ui.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Přidání zprávu");
+                stage.setScene(new Scene(loader.load(), 400, 400));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                AddMessRelUI controller = loader.getController();
+                controller.init(s_diagrams_array.get(diagIndex), classDiagram, false);
+                stage.showAndWait();
+                s_diagrams_array_ui.get(diagIndex).draw(); 
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -115,35 +144,42 @@ public class Controller implements EventHandler<ActionEvent> {
         } else {
             System.out.println("Chyba při otevření souboru");
         }
+    }
 
-        
-        SequenceDiagram s_diagram = new SequenceDiagram("Sequence Diagram", id_sd);
+    @FXML
+    public void addSeqDiag() {
+        SequenceDiagram s_diagram = new SequenceDiagram("Sequence Diagram", idSeqDiag);
         s_diagrams_array.add(s_diagram);
         SequenceDiagramUI s_diagram_ui = new SequenceDiagramUI(s_diagram);
-        String id = Integer.toString(id_sd);
+        String id = Integer.toString(idSeqDiag);
         s_diagram_ui.setId(id);
         s_diagrams_array_ui.add(s_diagram_ui);
         center.getChildren().add(s_diagram_ui);
-        sd_button = new JFXButton();
-        sd_button.setText("sekvenční diagram x");
+        ToggleButton sd_button = new ToggleButton();
+        sd_button.setText("Sekvenční diagram " + id);
         sd_button.setPrefWidth(200);
         sd_button.setOnAction(this); 
         sd_button.setId(id);
+        sd_button.setToggleGroup(buttonGroup);
+        sd_button.setSelected(true);
         left_menu.getChildren().add(sd_button);
-        id_sd++; 
+        activeDiag = idSeqDiag;
+        idSeqDiag++; 
 
     }
-
+    
     @Override
     public void handle(ActionEvent event) {
         if(event.getSource() == c_diagram_button) {
             c_diagram_UI.toFront();
+            activeDiag = 0;
         }
-        if(event.getSource() == sd_button){
-            JFXButton sd_button = (JFXButton) event.getTarget();
+        else {
+            ToggleButton sd_button = (ToggleButton) event.getTarget();
             for (SequenceDiagramUI sd: s_diagrams_array_ui) {
                 if (sd.getId() == sd_button.getId()) {
                     sd.toFront();
+                    activeDiag = Integer.parseInt(sd.getId());
                 }
             }
 

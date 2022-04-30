@@ -50,12 +50,12 @@ public class ClassDiagramUI extends ScrollPane {
     public void draw() {
         center_pane.getChildren().clear();
 
-        for (UMLClass umlClass : classDiagram.classes) {
+        for (UMLClass umlClass : classDiagram.getClasses()) {
              umlClass.setStart(1);
         }
         x_pos = 10; 
         y_pos = 5; 
-        for (UMLClass umlClass : classDiagram.classes) {
+        for (UMLClass umlClass : classDiagram.getClasses()) {
             addClass(umlClass);
         }
         for (UMLRelation umlRelation : classDiagram.getRelations()) {
@@ -77,7 +77,7 @@ public class ClassDiagramUI extends ScrollPane {
     @FXML
     private void addRelation(UMLRelation umlRelation) {
         RelType type = umlRelation.getType();
-        UMLClass umlClass1 = classDiagram.findClass(umlRelation.getClassFrom());
+        UMLClass umlClass1 = umlRelation.getClassFrom();
         double x = umlClass1.getXPosition();
         int point = umlClass1.getStart();
         x = x + (point * point_space); //x pozice zacatku cary
@@ -93,7 +93,7 @@ public class ClassDiagramUI extends ScrollPane {
 
         umlClass1.setStart(point + 1); //nastaveni mista, ze ktereho vychazi cara 
  
-        UMLClass umlClass2 = classDiagram.findClass(umlRelation.getClassTo());
+        UMLClass umlClass2 = umlRelation.getClassTo();
         double x2 = umlClass2.getXPosition();
         int point2 = umlClass2.getStart();
         x2 = x2 + (point2 * point_space); //x pozice konce cary
@@ -156,8 +156,7 @@ public class ClassDiagramUI extends ScrollPane {
         umlClass2.setStart(point2 + 1); 
     }
 
-    //TODO Nenajde to třídy, které byly editovány
-    //TODO Vyřešit když se dostanu za hranice třídy
+     //TODO Vyřešit když se dostanu za hranice třídy
 
     
 }
