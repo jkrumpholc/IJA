@@ -38,4 +38,17 @@ public class SequenceDiagram extends Element {
     public void clearMessages() {
         this.listMessages.clear();
     }
+
+    public void clearObjects() {
+        this.listObject.clear();
+    }
+
+    public UMLObject findObject(String name) {
+        for (UMLObject umlObj: this.listObject){
+            if (umlObj.name.equals(name)){
+                return umlObj;
+            }
+        }
+        return null;
+    }
 }

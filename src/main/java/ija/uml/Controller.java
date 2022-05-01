@@ -9,10 +9,17 @@ import java.io.IOException;
 
 import ija.uml.items.ClassDiagram;
 import ija.uml.items.SequenceDiagram;
+import ija.uml.items.UMLAttribute;
+import ija.uml.items.UMLClass;
+import ija.uml.items.UMLClassifier;
+import ija.uml.items.UMLOperation;
+import ija.uml.items.UMLRelation;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -34,7 +41,7 @@ public class Controller implements EventHandler<ActionEvent> {
     ClassDiagramUI c_diagram_UI;
     ToggleGroup buttonGroup;
     
-
+//TODO dodělat zpet
     @FXML
     private ToggleButton c_diagram_button;
     @FXML
@@ -137,13 +144,27 @@ public class Controller implements EventHandler<ActionEvent> {
 
     @FXML
     public void open() {
-        FileChooser file_chooser = new FileChooser();
+/*         FileChooser file_chooser = new FileChooser();
         File selected_file = file_chooser.showOpenDialog(null);
         if (selected_file != null) {
             System.out.println(selected_file);
         } else {
             System.out.println("Chyba při otevření souboru");
-        }
+        } */
+        //TODO dodělat
+        UMLClass cl = classDiagram.createClass("Cl1");
+        cl.addAttribute(new UMLAttribute("attr1", new UMLClassifier("int")));
+        cl.addAttribute(new UMLAttribute("attr2", new UMLClassifier("int")));
+        cl.addOperation(new UMLOperation("meth1", new UMLClassifier("int")));
+        cl.addOperation(new UMLOperation("meth2", new UMLClassifier("String")));
+        UMLClass c2 = classDiagram.createClass("Class2");
+        c2.addAttribute(new UMLAttribute("attr3", new UMLClassifier("int")));
+        c2.addAttribute(new UMLAttribute("attr4", new UMLClassifier("int")));
+        c2.addOperation(new UMLOperation("meth3", new UMLClassifier("int")));
+        c2.addOperation(new UMLOperation("meth4", new UMLClassifier("String")));
+        classDiagram.addRelation(new UMLRelation(UMLRelation.RelType.AGGR, cl, cl));
+        classDiagram.addRelation(new UMLRelation(UMLRelation.RelType.GENER, cl, c2));
+        c_diagram_UI.draw();
     }
 
     @FXML
@@ -172,6 +193,7 @@ public class Controller implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         if(event.getSource() == c_diagram_button) {
             c_diagram_UI.toFront();
+            c_diagram_UI.draw();
             activeDiag = 0;
         }
         else {
@@ -179,10 +201,17 @@ public class Controller implements EventHandler<ActionEvent> {
             for (SequenceDiagramUI sd: s_diagrams_array_ui) {
                 if (sd.getId() == sd_button.getId()) {
                     sd.toFront();
+                    sd.draw();
                     activeDiag = Integer.parseInt(sd.getId());
                 }
             }
 
         }
+    }
+
+    public static void errorMessage(String text) {
+        Alert errorAlert = new Alert(AlertType.ERROR);
+        errorAlert.setHeaderText(text);
+        errorAlert.showAndWait();
     }
 }

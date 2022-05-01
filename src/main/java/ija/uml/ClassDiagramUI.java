@@ -80,7 +80,8 @@ public class ClassDiagramUI extends ScrollPane {
         UMLClass umlClass1 = umlRelation.getClassFrom();
         double x = umlClass1.getXPosition();
         int point = umlClass1.getStart();
-        x = x + (point * point_space); //x pozice zacatku cary
+        if(point < 8){
+            x = x + (point * point_space); //x pozice zacatku cary
         double y_end = y_pos + width; //konec ctverce 
 
         Line line1 = new Line();
@@ -153,10 +154,8 @@ public class ClassDiagramUI extends ScrollPane {
             polygon.setStroke(Color.BLACK);
             center_pane.getChildren().add(polygon);
         }
-        umlClass2.setStart(point2 + 1); 
+        umlClass2.setStart(point2 + 1);
+        }
+         
     }
-
-     //TODO Vyřešit když se dostanu za hranice třídy
-
-    
 }

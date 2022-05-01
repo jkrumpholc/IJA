@@ -1,7 +1,12 @@
+// autor: Tereza Buchníčková        //
+// login: xbuchn00                  //
+//      //
+
 package ija.uml.items;
 
 
 public class UMLMessage {
+    //TODO přidat název
 
     public enum MesType {
         SYNC,
@@ -11,12 +16,13 @@ public class UMLMessage {
         DELETE
     }
     MesType type;
-    UMLClass classFrom;
-    UMLClass classTo;
+    UMLObject objFrom;
+    UMLObject objTo;
 
-    public UMLMessage(MesType type, UMLClass classFrom, UMLClass classTo) {
-        this.classFrom = classFrom;
-        this.classTo = classTo;
+    public UMLMessage(MesType type, UMLObject umlObject, UMLObject umlObject2) {
+        this.type = type;
+        this.objFrom = umlObject;
+        this.objTo = umlObject2;
     }
 
     public String toString() {
@@ -38,7 +44,19 @@ public class UMLMessage {
                 strType = "Zánik objektu";
                 break;
         }
-        return strType + ": " + classFrom + " -> " + classTo;
+        return strType + ": " + objFrom + " -> " + objTo;
+    }
+
+    public UMLObject getObjFrom() {
+        return objFrom;
+    }
+
+    public UMLObject getObjTo() {
+        return objTo;
+    }
+
+    public MesType getType() {
+        return type;
     }
 }
 

@@ -45,9 +45,9 @@
                </rowConstraints>
                <children>
                   <Label text="Typ" GridPane.rowIndex="1" />
-                  <Label text="Třída 2" GridPane.rowIndex="3" />
+                  <Label fx:id="label_to" text="Třída 2" GridPane.rowIndex="3" />
                   <ChoiceBox fx:id="class_from" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
-                  <Label text="Třída 1" GridPane.rowIndex="2" />
+                  <Label fx:id="label_from" text="Třída 1" GridPane.rowIndex="2" />
                   <Button mnemonicParsing="false" onAction="#add" text="Přidat" GridPane.rowIndex="4" />
                   <ListView fx:id="list" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" />
                   <Button mnemonicParsing="false" onAction="#del" text="Smazat vybraný" GridPane.columnIndex="1" GridPane.rowIndex="4" />

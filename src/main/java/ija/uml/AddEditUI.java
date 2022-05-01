@@ -64,6 +64,10 @@ public class AddEditUI {
 
     @FXML
     void save_class() {
+        if (title.getText().isEmpty()) {
+            Controller.errorMessage("Musíte vyplnit jméno třídy"); 
+            return;
+        }
         Stage stage = (Stage) save.getScene().getWindow();
         stage.close();
         if (isEditMode) {
@@ -88,6 +92,10 @@ public class AddEditUI {
   
     @FXML
     void attr_add() {
+        if (attr_name.getText().isEmpty() || attr_type.getText().isEmpty()) {
+            Controller.errorMessage("Musíte vyplnit jméno a typ atributu"); 
+            return;
+        }
         UMLAttribute attr = new UMLAttribute(attr_name.getText(), new UMLClassifier(attr_type.getText()));
         attrs.add(attr);
         attr_list.getItems().add(attr.toString()); //pridani atributu do seznamu
@@ -104,6 +112,10 @@ public class AddEditUI {
 
     @FXML
     void meth_add() {
+        if (meth_name.getText().isEmpty() || meth_type.getText().isEmpty()) {
+            Controller.errorMessage("Musíte vyplnit jméno a typ metody"); 
+            return;
+        }
         UMLOperation meth = new UMLOperation(meth_name.getText(), new UMLClassifier(meth_type.getText())); 
         meths.add(meth);
         meth_list.getItems().add(meth.toString()); //pridani metody do seznamu

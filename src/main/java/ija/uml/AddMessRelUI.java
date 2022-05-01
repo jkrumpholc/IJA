@@ -10,6 +10,7 @@ import ija.uml.items.ClassDiagram;
 import ija.uml.items.SequenceDiagram;
 import ija.uml.items.UMLClass;
 import ija.uml.items.UMLMessage;
+import ija.uml.items.UMLObject;
 import ija.uml.items.UMLRelation;
 import ija.uml.items.UMLMessage.MesType;
 import ija.uml.items.UMLRelation.RelType;
@@ -17,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
@@ -34,6 +36,8 @@ public class AddMessRelUI {
     private ChoiceBox<String> type, class_from, class_to;
     @FXML
     private ListView<String> list;
+    @FXML
+    private Label label_from, label_to;
 
     
     public void init(SequenceDiagram sDiagram, ClassDiagram cDiagram, boolean isRelMode) {
@@ -41,14 +45,13 @@ public class AddMessRelUI {
         sequenceDiagram = sDiagram;
         classDiagram = cDiagram;
 
-        for (UMLClass umlClass : classDiagram.getClasses()) { //ziskani jmen trid do vyberu
-            String name = umlClass.getName();
-            
-            class_from.getItems().add(name);
-            class_to.getItems().add(name);
-        }
-
         if(isRelMode){
+            for (UMLClass umlClass : classDiagram.getClasses()) { //ziskani jmen trid do vyberu
+                String name = umlClass.getName();
+                
+                class_from.getItems().add(name);
+                class_to.getItems().add(name);
+            }
             for (UMLRelation rel : classDiagram.getRelations()) {
                 rels.add(rel);
                 list.getItems().add(rel.toString());
@@ -58,6 +61,14 @@ public class AddMessRelUI {
             type.getSelectionModel().selectFirst();
         }
         else {
+            for (UMLObject umlObj : sequenceDiagram.getObjects()) { //ziskani jmen trid do vyberu
+                String name = umlObj.getName();
+                // if(umlObj.getActive()) {
+                     class_from.getItems().add(name);
+                // }
+                //TODO podle objfrom, musíme zjistit, které objekty jí poslaly zprávu
+                class_to.getItems().add(name);
+            }
             for (UMLMessage mess : sequenceDiagram.getMessages()) { 
                 messages.add(mess);
                 list.getItems().add(mess.toString()); //vlozeni zprav do listView
@@ -65,6 +76,9 @@ public class AddMessRelUI {
             type.setItems(FXCollections.observableArrayList(
                 "Synchronní", "Asynchronní", "Návrat", "Vytvoření objektu", "Zánik objektu")); 
             type.getSelectionModel().selectFirst();
+            label_from.setText("Objekt 1");
+            label_to.setText("Objekt 2");
+
         }
     
     }  
@@ -137,10 +151,18 @@ public class AddMessRelUI {
                     type = MesType.DELETE;
                     break;
             }
-            String cf = class_from.getValue();
-            String ct = class_to.getValue();
-            UMLMessage mess = new UMLMessage(type, classDiagram.findClass(cf), classDiagram.findClass(ct)); 
+            String obf = class_from.getValue();
+            String obt = class_to.getValue();
+            if (obf == null || obt == null || obf.isEmpty() || obt.isEmpty()) {
+                Controller.errorMessage("Vyplňte zdrojový a cílový objekt");
+                return;
+            }
+            UMLMessage mess = new UMLMessage(type, sequenceDiagram.findObject(obf), sequenceDiagram.findObject(obt)); 
             messages.add(mess);
+            if (!checkMessages()) {
+                messages.remove(mess);
+                return;
+            }
             list.getItems().add(mess.toString()); //pridani zprav do seznamu
         } 
         
@@ -158,6 +180,45 @@ public class AddMessRelUI {
             }
             
         }
+    }
+
+    boolean checkMessages() {
+        for (UMLObject object : sequenceDiagram.getObjects()) {
+            if(object.getAutCreate()) {
+                object.setActive(true);
+            }
+            else {
+                object.setActive(false);
+            }
+        }
+        for (UMLMessage mess : messages) {
+            // TODO doplnit další kontroly
+            if (!mess.getObjFrom().getActive()) {
+                Controller.errorMessage("Objekt není vytvořený");
+                return false;
+            }
+            switch (mess.getType()) {
+                case CREATE:
+                    if (mess.getObjTo().getActive()) {
+                        Controller.errorMessage("Objekt je již vytvořený");
+                        return false;
+                    }
+                    mess.getObjTo().setActive(true);
+                    break;
+                case ASYN:
+                    break;
+                case DELETE:
+                    mess.getObjTo().setActive(false);
+                    break;
+                case SYNC:
+                    mess.getObjTo().addObjMess(mess.getObjFrom());
+                    break;
+                default: // REPLY
+                    mess.getObjFrom().delObjMess(mess.getObjTo());
+                    break;
+            }
+        }
+        return true;
     }
 
 }
