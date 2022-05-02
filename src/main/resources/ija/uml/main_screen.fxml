@@ -60,11 +60,11 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Přidat">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Přidat sekvenční diagram" onAction="#addSeqDiag"/>
-                        <MenuItem mnemonicParsing="false" text="Přidat třídu" onAction="#addClassWindow"/>
-                        <MenuItem mnemonicParsing="false" text="Přidat vztah" onAction="#addRelWindow"/>
-                        <MenuItem mnemonicParsing="false" text="Přidat objekt" onAction="#addObjWindow"/>
-                        <MenuItem mnemonicParsing="false" text="Přidat zprávu" onAction="#addMessWindow"/>
+                        <MenuItem fx:id="addSeqDiag" mnemonicParsing="false" text="Přidat sekvenční diagram" onAction="#addSeqDiag"/>
+                        <MenuItem fx:id="addClassWindow" mnemonicParsing="false" text="Přidat třídu" onAction="#addClassWindow"/>
+                        <MenuItem fx:id="addRelWindow" mnemonicParsing="false" text="Přidat vztah" onAction="#addRelWindow"/>
+                        <MenuItem fx:id="addObjWindow" mnemonicParsing="false" text="Přidat objekt" onAction="#addObjWindow"/>
+                        <MenuItem fx:id="addMessWindow" mnemonicParsing="false" text="Přidat zprávu" onAction="#addMessWindow"/>
                     </items>
                 </Menu>
             </menus>

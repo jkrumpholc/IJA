@@ -195,4 +195,4 @@ public class SequenceDiagramUI extends ScrollPane {
 
 }
 
-//TODO zkontrolovat, že má na co odpovědět
+

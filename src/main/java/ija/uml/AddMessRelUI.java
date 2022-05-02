@@ -5,15 +5,20 @@
 package ija.uml;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.event.ChangeListener;
 
 import ija.uml.items.ClassDiagram;
 import ija.uml.items.SequenceDiagram;
 import ija.uml.items.UMLClass;
 import ija.uml.items.UMLMessage;
 import ija.uml.items.UMLObject;
+import ija.uml.items.UMLOperation;
 import ija.uml.items.UMLRelation;
 import ija.uml.items.UMLMessage.MesType;
 import ija.uml.items.UMLRelation.RelType;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -33,7 +38,7 @@ public class AddMessRelUI {
     @FXML
     private Button save;
     @FXML 
-    private ChoiceBox<String> type, class_from, class_to;
+    private ChoiceBox<String> type, class_from, class_to, method;
     @FXML
     private ListView<String> list;
     @FXML
@@ -59,14 +64,23 @@ public class AddMessRelUI {
             type.setItems(FXCollections.observableArrayList(
                 "Asociace", "Agregace", "Kompozice", "Generalizace"));
             type.getSelectionModel().selectFirst();
+            //TODO schovat metodu
         }
         else {
+            class_to.getSelectionModel().selectedIndexProperty().addListener(
+                (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+                    String obt = class_to.getItems().get(new_val.intValue());
+                    List<UMLOperation> meth = sequenceDiagram.findObject(obt).getUMLClass().getOperation();
+                    method.getItems().clear();
+                    for(UMLOperation m : meth) {
+                        method.getItems().add(m.getName());
+                    }
+             });
             for (UMLObject umlObj : sequenceDiagram.getObjects()) { //ziskani jmen trid do vyberu
                 String name = umlObj.getName();
                 // if(umlObj.getActive()) {
                      class_from.getItems().add(name);
                 // }
-                //TODO podle objfrom, musíme zjistit, které objekty jí poslaly zprávu
                 class_to.getItems().add(name);
             }
             for (UMLMessage mess : sequenceDiagram.getMessages()) { 
@@ -78,7 +92,6 @@ public class AddMessRelUI {
             type.getSelectionModel().selectFirst();
             label_from.setText("Objekt 1");
             label_to.setText("Objekt 2");
-
         }
     
     }  
@@ -153,11 +166,17 @@ public class AddMessRelUI {
             }
             String obf = class_from.getValue();
             String obt = class_to.getValue();
+            String meth = method.getValue();
             if (obf == null || obt == null || obf.isEmpty() || obt.isEmpty()) {
                 Controller.errorMessage("Vyplňte zdrojový a cílový objekt");
                 return;
             }
-            UMLMessage mess = new UMLMessage(type, sequenceDiagram.findObject(obf), sequenceDiagram.findObject(obt)); 
+            if ((type == MesType.SYNC || type == MesType.ASYN) && (meth == null || meth.isEmpty())) {
+                Controller.errorMessage("Vyplňte metodu");
+                return;
+            }
+            //TODO nevyplňovat metodu pro jiný než sync a async
+            UMLMessage mess = new UMLMessage(type, meth, sequenceDiagram.findObject(obf), sequenceDiagram.findObject(obt)); 
             messages.add(mess);
             if (!checkMessages()) {
                 messages.remove(mess);

@@ -5,8 +5,6 @@
 package ija.uml.items;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class UMLObject extends Element {
     UMLClass umlClass;
@@ -24,13 +22,9 @@ public class UMLObject extends Element {
         this.autCreate = autCreate;
     }
     
+    //TODO předělat auto
     public java.lang.String toString() {
-        if (autCreate) {
-            return String.format("%s:%s (auto)",this.name,this.umlClass.name);
-        }
-        else {
-            return String.format("%s:%s",this.name,this.umlClass.name);
-        }
+        return String.format("%s : %s",this.name,this.umlClass.name);
     }
 
     public boolean getAutCreate() {
@@ -76,5 +70,9 @@ public class UMLObject extends Element {
 
     public void delObjMess(UMLObject obj){
         this.listObjMess.remove(obj);
+    }
+
+    public UMLClass getUMLClass() {
+        return this.umlClass;
     }
 }

@@ -13,6 +13,13 @@ public class UMLClass extends UMLClassifier{
     double y_pos;
     int rel_start_pos = 1;
 
+    public enum AccessMod {
+        PUBLIC,
+        PROTECTED,
+        INTERNAL,
+        PRIVATE
+    }
+    
     public UMLClass(String name) {
         super(name);
         umlClass = this;

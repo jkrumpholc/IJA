@@ -9,15 +9,16 @@ public class UMLOperation extends UMLAttribute{
     String name;
     UMLClassifier type;
     List<UMLAttribute> arguments;
-    public UMLOperation(String name, UMLClassifier type){
-        super(name, type);
+ 
+    public UMLOperation(String name, UMLClassifier type, UMLClass.AccessMod mode) {
+        super(name, type, mode);
         umlOperation = this;
         umlOperation.name = name;
         umlOperation.type = type;
         umlOperation.arguments = new ArrayList<>();
     }
-    public static UMLOperation create(String name, UMLClassifier type, UMLAttribute... umlAttributes) {
-        UMLOperation tmp = new UMLOperation(name, type);
+    public static UMLOperation create(String name, UMLClassifier type, UMLClass.AccessMod mode, UMLAttribute... umlAttributes) {
+        UMLOperation tmp = new UMLOperation(name, type, mode);
         tmp.arguments.addAll(Arrays.asList(umlAttributes));
         return tmp;
     }

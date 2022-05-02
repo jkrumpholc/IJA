@@ -24,6 +24,6 @@ public class UMLClassifier extends Element{
     }
     @Override
     public String toString(){
-        return String.format("%s(%s)",umlClassifier.name,umlClassifier.isUserDefined);
+        return String.format("%s",umlClassifier.name);
     }
 }

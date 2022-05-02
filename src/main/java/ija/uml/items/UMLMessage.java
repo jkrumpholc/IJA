@@ -6,7 +6,7 @@ package ija.uml.items;
 
 
 public class UMLMessage {
-    //TODO přidat název
+    //TODO přidat název (metodu)
 
     public enum MesType {
         SYNC,
@@ -16,11 +16,13 @@ public class UMLMessage {
         DELETE
     }
     MesType type;
+    String method;
     UMLObject objFrom;
     UMLObject objTo;
 
-    public UMLMessage(MesType type, UMLObject umlObject, UMLObject umlObject2) {
+    public UMLMessage(MesType type, String method, UMLObject umlObject, UMLObject umlObject2) {
         this.type = type;
+        this.method = method;
         this.objFrom = umlObject;
         this.objTo = umlObject2;
     }
@@ -29,10 +31,10 @@ public class UMLMessage {
         String strType;
         switch (type) {
             case SYNC:
-                strType = "Synchronní";
+                strType = method + "(sync)";
                 break;
             case ASYN:
-                strType = "Asynchronní";
+                strType = method + "(async)";
                 break;
             case REPLY:
                 strType = "Návrat";

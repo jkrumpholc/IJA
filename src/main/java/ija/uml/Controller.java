@@ -4,7 +4,6 @@
 
 package ija.uml;
 
-import java.io.File;
 import java.io.IOException;
 
 import ija.uml.items.ClassDiagram;
@@ -17,6 +16,7 @@ import ija.uml.items.UMLRelation;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
@@ -48,6 +48,9 @@ public class Controller implements EventHandler<ActionEvent> {
     private AnchorPane center;
     @FXML
     private VBox left_menu;
+    @FXML
+    private MenuItem addSeqDiag, addClassWindow, addRelWindow, addObjWindow, addMessWindow;
+
     
     @FXML
     public void initialize() {
@@ -60,6 +63,8 @@ public class Controller implements EventHandler<ActionEvent> {
         c_diagram_button.setToggleGroup(buttonGroup);
         c_diagram_button.setSelected(true);
         activeDiag = 0;
+        addObjWindow.setDisable(true);
+        addMessWindow.setDisable(true);
     }
 
     @FXML
@@ -153,15 +158,15 @@ public class Controller implements EventHandler<ActionEvent> {
         } */
         //TODO dodělat
         UMLClass cl = classDiagram.createClass("Cl1");
-        cl.addAttribute(new UMLAttribute("attr1", new UMLClassifier("int")));
-        cl.addAttribute(new UMLAttribute("attr2", new UMLClassifier("int")));
-        cl.addOperation(new UMLOperation("meth1", new UMLClassifier("int")));
-        cl.addOperation(new UMLOperation("meth2", new UMLClassifier("String")));
+        cl.addAttribute(new UMLAttribute("attr1", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
+        cl.addAttribute(new UMLAttribute("attr2", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
+        cl.addOperation(new UMLOperation("meth1", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
+        cl.addOperation(new UMLOperation("meth2", new UMLClassifier("String"), UMLClass.AccessMod.PUBLIC));
         UMLClass c2 = classDiagram.createClass("Class2");
-        c2.addAttribute(new UMLAttribute("attr3", new UMLClassifier("int")));
-        c2.addAttribute(new UMLAttribute("attr4", new UMLClassifier("int")));
-        c2.addOperation(new UMLOperation("meth3", new UMLClassifier("int")));
-        c2.addOperation(new UMLOperation("meth4", new UMLClassifier("String")));
+        c2.addAttribute(new UMLAttribute("attr3", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
+        c2.addAttribute(new UMLAttribute("attr4", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
+        c2.addOperation(new UMLOperation("meth3", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
+        c2.addOperation(new UMLOperation("meth4", new UMLClassifier("String"), UMLClass.AccessMod.PUBLIC));
         classDiagram.addRelation(new UMLRelation(UMLRelation.RelType.AGGR, cl, cl));
         classDiagram.addRelation(new UMLRelation(UMLRelation.RelType.GENER, cl, c2));
         c_diagram_UI.draw();
@@ -186,6 +191,11 @@ public class Controller implements EventHandler<ActionEvent> {
         left_menu.getChildren().add(sd_button);
         activeDiag = idSeqDiag;
         idSeqDiag++; 
+        //znepristupnenii tlacitek pro diagram trid
+        addClassWindow.setDisable(true);
+        addRelWindow.setDisable(true);
+        addObjWindow.setDisable(false);
+        addMessWindow.setDisable(false);
 
     }
     
@@ -195,6 +205,10 @@ public class Controller implements EventHandler<ActionEvent> {
             c_diagram_UI.toFront();
             c_diagram_UI.draw();
             activeDiag = 0;
+            addObjWindow.setDisable(true);
+            addMessWindow.setDisable(true);
+            addClassWindow.setDisable(false);
+            addRelWindow.setDisable(false);
         }
         else {
             ToggleButton sd_button = (ToggleButton) event.getTarget();
@@ -204,6 +218,10 @@ public class Controller implements EventHandler<ActionEvent> {
                     sd.draw();
                     activeDiag = Integer.parseInt(sd.getId());
                 }
+                addClassWindow.setDisable(true);
+                addRelWindow.setDisable(true);
+                addObjWindow.setDisable(false);
+                addMessWindow.setDisable(false);
             }
 
         }

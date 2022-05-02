@@ -9,7 +9,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -28,7 +27,7 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </HBox>
-      <VBox layoutX="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="400.0">
+      <VBox layoutX="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="342.0" prefWidth="400.0">
          <children>
             <GridPane prefHeight="356.0" prefWidth="400.0">
                <columnConstraints>
@@ -41,26 +40,29 @@
                   <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                   <Label text="Typ" GridPane.rowIndex="1" />
                   <Label fx:id="label_to" text="Třída 2" GridPane.rowIndex="3" />
                   <ChoiceBox fx:id="class_from" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
                   <Label fx:id="label_from" text="Třída 1" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" onAction="#add" text="Přidat" GridPane.rowIndex="4" />
+                  <Button mnemonicParsing="false" onAction="#add" text="Přidat" GridPane.rowIndex="5" />
                   <ListView fx:id="list" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" />
-                  <Button mnemonicParsing="false" onAction="#del" text="Smazat vybraný" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Button mnemonicParsing="false" onAction="#del" text="Smazat vybraný" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <ChoiceBox fx:id="class_to" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
                   <ChoiceBox fx:id="type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+                  <Label text="Metoda" GridPane.rowIndex="4" />
+                  <ChoiceBox fx:id="method" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
                </children>
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets left="10.0" right="10.0" top="10.0" />
                </padding>
             </GridPane>
          </children>
          <padding>
-            <Insets bottom="20.0" top="20.0" />
+            <Insets bottom="10.0" top="20.0" />
          </padding>
       </VBox>
    </children>

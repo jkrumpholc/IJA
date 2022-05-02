@@ -79,7 +79,7 @@ public class AddObjUI {
         }
         UMLObject obj = new UMLObject(objName, cl, aut_create.isSelected());
         objects.add(obj);
-        obj_list.getItems().add(obj.toString());  //pridani objektu do seznamu
+        obj_list.getItems().add(obj.toString() + (obj.getAutCreate() ? " (auto)" : ""));  //pridani objektu do seznamu
     }    
 
     @FXML
