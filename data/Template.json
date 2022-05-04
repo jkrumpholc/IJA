@@ -1,12 +1,9 @@
 {
-  "diagrams":
-  {
-    "diagram" :
+  "diagram" :
     {
       "name": "diagram",
       "classes": ["class1"],
       "classifiers": ["classifier1"]
-    }
   },
   "classes":
   {
@@ -15,7 +12,7 @@
       "name": "class",
       "abstract": false,
       "diagram": "diagram",
-      "atributes": ["attribute1","attribute2"]
+      "attributes": ["attribute1","attribute2"]
     }
   },
   "classifiers":

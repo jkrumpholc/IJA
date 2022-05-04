@@ -4,6 +4,7 @@
 
 package ija.uml;
 
+import java.io.File;
 import java.io.IOException;
 
 import ija.uml.items.ClassDiagram;
@@ -31,8 +32,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Controller implements EventHandler<ActionEvent> {
 
@@ -165,14 +170,50 @@ public class Controller implements EventHandler<ActionEvent> {
 
     @FXML
     public void open() {
-/*         FileChooser file_chooser = new FileChooser();
+        ArrayList data;
+        FileChooser file_chooser = new FileChooser();
         File selected_file = file_chooser.showOpenDialog(null);
         if (selected_file != null) {
-            System.out.println(selected_file);
-        } else {
-            System.out.println("Chyba při otevření souboru");
-        } */
-        //TODO dodělat
+            data = File_manager.open(selected_file);
+            JSONObject diagram = (JSONObject) data.get(0);
+            String diagram_name = diagram.get("name").toString();
+            int class_num = ((JSONArray) diagram.get("classes")).size();
+            int classifiers_num = ((JSONArray) diagram.get("classifiers")).size();
+            JSONObject classes = (JSONObject) data.get(1);
+            JSONObject classifiers = (JSONObject) data.get(2);
+            JSONObject attributes = (JSONObject) data.get(3);
+            JSONObject operations = (JSONObject) data.get(4);
+            ArrayList<UMLClass> classes_list = new ArrayList<UMLClass>();
+            ArrayList<UMLClassifier> classifiers_list = new ArrayList<UMLClassifier>();
+            ArrayList<UMLAttribute> attribute_list = new ArrayList<UMLAttribute>();
+            ArrayList<UMLOperation> operation_list = new ArrayList<UMLOperation>();
+            ArrayList<UMLRelation> relation_list = new ArrayList<UMLRelation>();
+
+            if (class_num != classes.size()){
+                System.out.println("Inconsistency");}
+            classifiers.keySet().forEach(classifier_name ->{
+                JSONObject classifier_object = (JSONObject) classifiers.get(classifier_name);
+                UMLClassifier classifier = new UMLClassifier((String) classifier_name);
+                classifiers_list.add(classifier);
+            });
+            attributes.keySet().forEach(attribute_name ->{
+                JSONObject attribute_object = (JSONObject) attributes.get(attribute_name);
+                //UMLAttribute attribute = new UMLAttribute((String) attribute_name);
+
+            });
+            classes.keySet().forEach(class_name ->{
+                JSONObject class_object = (JSONObject) classes.get(class_name);
+                String UML_class_diagram = class_object.get("diagram").toString();
+                JSONArray UML_class_attributes = (JSONArray) class_object.get("attributes");
+                if (!Objects.equals(diagram_name, UML_class_diagram)){
+                    System.out.println("Inconsistency");
+                }
+
+            });
+            //for (JSONObject Class: classes.values()){
+
+            //}
+        //TODO změnit cestu
         UMLClass cl = classDiagram.createClass("Cl1");
         cl.addAttribute(new UMLAttribute("attr1", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
         cl.addAttribute(new UMLAttribute("attr2", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
@@ -186,6 +227,9 @@ public class Controller implements EventHandler<ActionEvent> {
         classDiagram.addRelation(new UMLRelation(UMLRelation.RelType.AGGR, cl, cl));
         classDiagram.addRelation(new UMLRelation(UMLRelation.RelType.GENER, cl, c2));
         c_diagram_UI.draw();
+        } else {
+            System.out.println("Chyba při otevření souboru");
+        }
     }
 
     @FXML

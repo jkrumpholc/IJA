@@ -4,29 +4,48 @@
 
 package ija.uml;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class File_manager {
 
-    public StringBuilder open (String filepath) throws FileNotFoundException {
-        StringBuilder file_data = new StringBuilder();
-        File filename = new File(filepath);
-        Scanner reader = new Scanner(filename);
-        while (reader.hasNextLine()){
-            file_data.append(reader.nextLine());
+    public static ArrayList<JSONObject> open(File filepath) {
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(filepath))
+            {Object obj = jsonParser.parse(reader);
+            ArrayList<JSONObject> UML_Array = new ArrayList<JSONObject>();
+            JSONObject Diagrams = (JSONObject) ((JSONObject) obj).get("diagram");
+            UML_Array.add(Diagrams);
+            JSONObject Classes =(JSONObject) ((JSONObject) obj).get("classes");
+            UML_Array.add(Classes);
+            JSONObject Classifiers = (JSONObject) ((JSONObject) obj).get("classifiers");
+            UML_Array.add(Classifiers);
+            JSONObject Attributes = (JSONObject) ((JSONObject) obj).get("attributes");
+            UML_Array.add(Attributes);
+            JSONObject Operations = (JSONObject) ((JSONObject) obj).get("operations");
+            UML_Array.add(Operations);
+            return UML_Array;
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
         }
-        return file_data;
+
+        return null;
+    }
+    public static String parseUMLObject(JSONObject UML_data){
+        JSONObject diagram_object_list = (JSONObject) UML_data.get("diagrams");
+        String data = "";
+
+        return data;
     }
 
-    public boolean write (String filepath, StringBuilder data) throws IOException {
-        FileWriter writer = new FileWriter(filepath);
-        writer.write(String.valueOf(data));
-        writer.close();
-        return true;
+    public boolean write (String filepath, String data) throws IOException {
+
+        return false;
     }
 }
