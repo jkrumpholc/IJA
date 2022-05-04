@@ -34,6 +34,7 @@ public class AddMessRelUI {
     ArrayList<UMLRelation> rels = new ArrayList<UMLRelation>();
     ArrayList<UMLMessage> messages = new ArrayList<UMLMessage>();
     boolean isRelMode;
+    boolean dataSaved = false;
 
     @FXML
     private Button save;
@@ -42,7 +43,7 @@ public class AddMessRelUI {
     @FXML
     private ListView<String> list;
     @FXML
-    private Label label_from, label_to;
+    private Label label_from, label_to, method_lable;
 
     
     public void init(SequenceDiagram sDiagram, ClassDiagram cDiagram, boolean isRelMode) {
@@ -51,6 +52,8 @@ public class AddMessRelUI {
         classDiagram = cDiagram;
 
         if(isRelMode){
+            method.setVisible(false);
+            method_lable.setVisible(false);
             for (UMLClass umlClass : classDiagram.getClasses()) { //ziskani jmen trid do vyberu
                 String name = umlClass.getName();
                 
@@ -76,6 +79,12 @@ public class AddMessRelUI {
                         method.getItems().add(m.getName());
                     }
              });
+            type.getSelectionModel().selectedIndexProperty().addListener(
+                (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+                    int index = new_val.intValue();
+                    method.setVisible(index < 2 ? true : false);
+                    method_lable.setVisible(index < 2 ? true : false);
+            });
             for (UMLObject umlObj : sequenceDiagram.getObjects()) { //ziskani jmen trid do vyberu
                 String name = umlObj.getName();
                 // if(umlObj.getActive()) {
@@ -117,7 +126,7 @@ public class AddMessRelUI {
                 sequenceDiagram.addMessage(mess);
             } 
         }
-        
+        dataSaved = true;
     }
   
     @FXML
@@ -166,7 +175,7 @@ public class AddMessRelUI {
             }
             String obf = class_from.getValue();
             String obt = class_to.getValue();
-            String meth = method.getValue();
+            String meth = method.getValue(); //vybrana metoda
             if (obf == null || obt == null || obf.isEmpty() || obt.isEmpty()) {
                 Controller.errorMessage("Vyplňte zdrojový a cílový objekt");
                 return;
@@ -175,7 +184,9 @@ public class AddMessRelUI {
                 Controller.errorMessage("Vyplňte metodu");
                 return;
             }
-            //TODO nevyplňovat metodu pro jiný než sync a async
+            if ((type != MesType.SYNC && type != MesType.ASYN)) {
+                meth = "";
+            }
             UMLMessage mess = new UMLMessage(type, meth, sequenceDiagram.findObject(obf), sequenceDiagram.findObject(obt)); 
             messages.add(mess);
             if (!checkMessages()) {
@@ -240,5 +251,8 @@ public class AddMessRelUI {
         return true;
     }
 
+    boolean getDataSaved() {
+        return dataSaved;
+    }
 }
 

@@ -28,6 +28,7 @@ public class AddEditUI {
     String currentItem;
     ArrayList<UMLAttribute> attrs = new ArrayList<UMLAttribute>();
     ArrayList<UMLOperation> meths = new ArrayList<UMLOperation>(); 
+    boolean dataSaved = false;
 
     @FXML
     private Button save;
@@ -99,6 +100,7 @@ public class AddEditUI {
                 umlClass.addOperation(meth);
             }
         }  
+        dataSaved = true;
     }
 
     private AccessMod mode(int index){
@@ -161,5 +163,9 @@ public class AddEditUI {
             meths.remove(index);
         }
     } 
+
+    boolean getDataSaved() {
+        return dataSaved;
+    }
 }
 

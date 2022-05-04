@@ -58,13 +58,20 @@
                         <MenuItem mnemonicParsing="false" text="Uložit jako" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Přidat">
+                <Menu mnemonicParsing="false" text="Úpravy">
+                    <MenuItem text="Zpět" onAction="#undo"/>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Diagram tříd">
+                    <items>
+                        <MenuItem fx:id="addClassWindow" mnemonicParsing="false" text="Přidat třídu" onAction="#addClassWindow"/>
+                        <MenuItem fx:id="addRelWindow" mnemonicParsing="false" text="Vztahy" onAction="#addRelWindow"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Sekvenční diagram">
                     <items>
                         <MenuItem fx:id="addSeqDiag" mnemonicParsing="false" text="Přidat sekvenční diagram" onAction="#addSeqDiag"/>
-                        <MenuItem fx:id="addClassWindow" mnemonicParsing="false" text="Přidat třídu" onAction="#addClassWindow"/>
-                        <MenuItem fx:id="addRelWindow" mnemonicParsing="false" text="Přidat vztah" onAction="#addRelWindow"/>
-                        <MenuItem fx:id="addObjWindow" mnemonicParsing="false" text="Přidat objekt" onAction="#addObjWindow"/>
-                        <MenuItem fx:id="addMessWindow" mnemonicParsing="false" text="Přidat zprávu" onAction="#addMessWindow"/>
+                        <MenuItem fx:id="addObjWindow" mnemonicParsing="false" text="Objekty" onAction="#addObjWindow"/>
+                        <MenuItem fx:id="addMessWindow" mnemonicParsing="false" text="Zprávy" onAction="#addMessWindow"/>
                     </items>
                 </Menu>
             </menus>

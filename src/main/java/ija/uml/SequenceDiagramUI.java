@@ -29,6 +29,8 @@ public class SequenceDiagramUI extends ScrollPane {
     int line_start_position = 50;
     int line_length = 20;
     double obj_end = 45;
+    int rectangle_width = 6;
+    int part_height = 60;
 
 
     @FXML
@@ -77,8 +79,7 @@ public class SequenceDiagramUI extends ScrollPane {
                     if(object.getActive()){
                         drawTimeline(timeline, end_position - 60, timeline, end_position);
                         if(object.getRectangle()){
-                            Rectangle rectangle = new Rectangle(timeline - 3, end_position - 60, 6, 60);
-                            center_pane.getChildren().add(rectangle);
+                            drawRectangle(timeline - 3, end_position - 60, rectangle_width, part_height);
                         }
                     }
                 }
@@ -111,35 +112,51 @@ public class SequenceDiagramUI extends ScrollPane {
         double timeline_to = message.getObjTo().getXPosition() + line_start_position;
         if (type == MesType.CREATE) {
             UMLObject objTo = message.getObjTo();
+            obj_end = end_position + 40;
             drawObj(objTo);
             drawLine(message); 
-            Rectangle rectangle = new Rectangle(timeline_from - 3, end_position, 6, 40);
-            center_pane.getChildren().add(rectangle);
-            drawTimeline(timeline_from, end_position + 40, timeline_from, end_position + 60);
+            if(message.getObjFrom().getRectangle() == true) {
+                drawRectangle(timeline_from - 3, end_position, rectangle_width, part_height);
+            } else {
+                drawRectangle(timeline_from - 3, end_position, rectangle_width, 40);
+                drawTimeline(timeline_from, end_position + 40, timeline_from, end_position + 60);
+            }
             message.getObjTo().setActive(true);
         }
         if (type == MesType.ASYN) {
             drawLine(message);
-            Rectangle rectangle = new Rectangle(timeline_to - 3, end_position, 6, 40);
-            center_pane.getChildren().add(rectangle);
-            drawTimeline(timeline_to, end_position + 40, timeline_to, end_position + 60);
-            drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
+            if (message.getObjFrom().getRectangle() == true) {
+                drawRectangle(timeline_from - 3, end_position, rectangle_width, part_height);
+            }
+            else {
+                 //class from
+                drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
+            }
+            if (message.getObjTo().getRectangle() == true) {
+                drawRectangle(timeline_to - 3, end_position, rectangle_width, part_height);
+            } else {
+                //class to
+                drawRectangle(timeline_to - 3, end_position, rectangle_width, 40);
+                drawTimeline(timeline_to, end_position + 40, timeline_to, end_position + 60);
+            }
+            
         }
         if (type == MesType.DELETE) {
             drawLine(message);
-            Rectangle rectangle = new Rectangle(timeline_to - 3, end_position, 6, 40);
-            center_pane.getChildren().add(rectangle);
+            drawRectangle(timeline_to - 3, end_position, rectangle_width, 40);
             drawTimeline(timeline_to, end_position + 40, timeline_to, end_position + 50);
             drawCross(timeline_to, end_position + 50);
-            drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
+            if (message.getObjFrom().getRectangle() == true) {
+                drawRectangle(timeline_from - 3, end_position, rectangle_width, part_height);
+            } else {
+                drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
+            }
             message.getObjTo().setActive(false);
         }
         if (type == MesType.SYNC) {
             drawLine(message);
-            Rectangle rectangle1 = new Rectangle(timeline_to - 3, end_position, 6, 60);
-            center_pane.getChildren().add(rectangle1);
-            Rectangle rectangle2 = new Rectangle(timeline_from - 3, end_position, 6, 60);
-            center_pane.getChildren().add(rectangle2);
+            drawRectangle(timeline_to - 3, end_position, rectangle_width, part_height);
+            drawRectangle(timeline_from - 3, end_position, rectangle_width, part_height);
             message.getObjFrom().setRectangle(true);
             message.getObjTo().setRectangle(true);
             message.getObjTo().addObjMess(message.getObjFrom());
@@ -171,8 +188,12 @@ public class SequenceDiagramUI extends ScrollPane {
 
         double line_end_x = x2 + line_start_position;
         Line mess = new Line(x1 + line_start_position, end_position, line_end_x, end_position);
-        Label name = new Label("text");
-        name.setLayoutX(x1 + line_start_position + 40);
+        Label name = new Label(message.getMethod()); //nazev metody
+        if (x1 < x2) {
+            name.setLayoutX(x1 + line_start_position + 40);
+        } else {
+            name.setLayoutX(x2 - line_start_position - 40); //TODO nefunguje
+        }
         name.setLayoutY(end_position);
         if (type == MesType.CREATE || type == MesType.REPLY) {
             mess.getStrokeDashArray().addAll(2d);
@@ -191,6 +212,11 @@ public class SequenceDiagramUI extends ScrollPane {
             center_pane.getChildren().add(arrowLine2);
         }
         
+    }
+
+    private void drawRectangle(double x, double y, int width, double height ) {
+        Rectangle rectangle = new Rectangle(x, y, width, height);
+        center_pane.getChildren().add(rectangle);
     }
 
 }

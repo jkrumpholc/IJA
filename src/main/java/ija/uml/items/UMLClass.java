@@ -35,6 +35,14 @@ public class UMLClass extends UMLClassifier{
         umlClass.operation_list = new ArrayList<>();
     }
 
+    public UMLClass(UMLClass source) {
+        super(source.name, source.isUserDefined);
+        umlClass = this;
+        umlClass.isAbstract = false;
+        umlClass.attribute_list = new ArrayList<>(source.attribute_list);
+        umlClass.operation_list = new ArrayList<>(source.operation_list);
+    }
+    
     public void setAbstract(boolean b) {
         umlClass.isAbstract = b;
     }

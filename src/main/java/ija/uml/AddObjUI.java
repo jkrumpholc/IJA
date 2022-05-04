@@ -22,6 +22,7 @@ public class AddObjUI {
     SequenceDiagram sequenceDiagram;
     ClassDiagram classDiagram;
     ArrayList<UMLObject> objects = new ArrayList<UMLObject>();
+    boolean dataSaved = false;
 
     @FXML
     private Button save;
@@ -62,6 +63,7 @@ public class AddObjUI {
         for (UMLObject obj : objects) {
             sequenceDiagram.addObject(obj);
         }
+        dataSaved = true;
     }
     
     @FXML
@@ -90,4 +92,8 @@ public class AddObjUI {
             objects.remove(index);
         }
     } 
+    
+    boolean getDataSaved() {
+        return dataSaved;
+    }
 }

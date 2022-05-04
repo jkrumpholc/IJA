@@ -53,7 +53,7 @@
                   <Button mnemonicParsing="false" onAction="#del" text="Smazat vybraný" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <ChoiceBox fx:id="class_to" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
                   <ChoiceBox fx:id="type" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-                  <Label text="Metoda" GridPane.rowIndex="4" />
+                  <Label fx:id="method_lable" text="Metoda" GridPane.rowIndex="4" />
                   <ChoiceBox fx:id="method" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
                </children>
                <padding>

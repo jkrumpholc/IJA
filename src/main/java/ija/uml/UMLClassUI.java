@@ -6,6 +6,7 @@ package ija.uml;
 
 import java.io.IOException;
 
+import ija.uml.items.ClassDiagram;
 import ija.uml.items.UMLAttribute;
 import ija.uml.items.UMLClass;
 import ija.uml.items.UMLOperation;
@@ -27,8 +28,9 @@ public class UMLClassUI extends VBox {
     @FXML
     private ListView<String> attributes, operation;
     UMLClass umlClass;
+    ClassDiagram classDiagram;
 
-    public UMLClassUI(UMLClass umlClass) {
+    public UMLClassUI(UMLClass umlClass, ClassDiagram classDiagram) {
         this.umlClass = umlClass;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("uml_class_ui.fxml"));
         fxmlLoader.setRoot(this);
@@ -39,6 +41,7 @@ public class UMLClassUI extends VBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        this.classDiagram = classDiagram;
         initClass();
     }
 
@@ -51,9 +54,13 @@ public class UMLClassUI extends VBox {
                 stage.setScene(new Scene(loader.load(), 400, 400));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 AddEditUI controller = loader.getController();
+                var tempUndoData = new UndoData(umlClass, classDiagram.findClassPos(umlClass.getName()));
                 controller.init(null, true, umlClass);
                 stage.showAndWait();
-                initClass();
+                if (controller.getDataSaved()) {
+                    UndoData.setUndoBuffer(tempUndoData);
+                    initClass();
+                }
             }
             catch (IOException e) {
                 e.printStackTrace();

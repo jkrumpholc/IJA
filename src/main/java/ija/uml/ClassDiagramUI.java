@@ -65,7 +65,7 @@ public class ClassDiagramUI extends ScrollPane {
     
     @FXML
     private void addClass(UMLClass umlClass) {
-        UMLClassUI umlClassUI = new UMLClassUI(umlClass);
+        UMLClassUI umlClassUI = new UMLClassUI(umlClass, classDiagram);
         umlClass.setPosition(x_pos, y_pos);
         umlClassUI.setLayoutX(x_pos);
         umlClassUI.setLayoutY(y_pos);
@@ -109,7 +109,7 @@ public class ClassDiagramUI extends ScrollPane {
         y_end_line = y_end_line - (20 * point);
         line3.setEndY(y_end_line);
         center_pane.getChildren().add(line3);
-        if(type == RelType.ASSOC) {
+        /* if(type == RelType.ASSOC) {
             Line arrow1 = new Line();
             arrow1.setStartX(x2);
             arrow1.setStartY(y_end_line);
@@ -122,7 +122,7 @@ public class ClassDiagramUI extends ScrollPane {
             arrow2.setEndX(x2 + 5);
             arrow2.setEndY(y_end_line + 7);
             center_pane.getChildren().add(arrow2);
-        }
+        } */
         if(type == RelType.COMPOS) {
             Polygon polygon = new Polygon();
             polygon.getPoints().addAll(new Double[]{

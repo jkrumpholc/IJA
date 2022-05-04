@@ -58,6 +58,24 @@ public class ClassDiagram extends Element{
         return null;
     }
 
+    public UMLClass getClassAt(int pos) {
+        if (pos < 0 || pos >= classes.size()) {
+            return null;
+        }
+        return classes.get(pos);
+    }
+
+    public int findClassPos(String name) {
+        int index = 0;
+        for (UMLClass umlClass: diagram.classes){
+            if (umlClass.name.equals(name)){
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+
     public UMLClassifier classifierForName(String name) {
         UMLClassifier classifier = findClassifier(name);
         if (classifier == null) {

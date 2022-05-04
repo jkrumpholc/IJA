@@ -60,5 +60,9 @@ public class UMLMessage {
     public MesType getType() {
         return type;
     }
+
+    public String getMethod() {
+        return method;
+    }
 }
 

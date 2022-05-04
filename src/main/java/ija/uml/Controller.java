@@ -11,6 +11,8 @@ import ija.uml.items.SequenceDiagram;
 import ija.uml.items.UMLAttribute;
 import ija.uml.items.UMLClass;
 import ija.uml.items.UMLClassifier;
+import ija.uml.items.UMLMessage;
+import ija.uml.items.UMLObject;
 import ija.uml.items.UMLOperation;
 import ija.uml.items.UMLRelation;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controller implements EventHandler<ActionEvent> {
 
@@ -41,7 +44,6 @@ public class Controller implements EventHandler<ActionEvent> {
     ClassDiagramUI c_diagram_UI;
     ToggleGroup buttonGroup;
     
-//TODO dodělat zpet
     @FXML
     private ToggleButton c_diagram_button;
     @FXML
@@ -94,9 +96,13 @@ public class Controller implements EventHandler<ActionEvent> {
                 stage.setScene(new Scene(loader.load(), 400, 400));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 AddMessRelUI controller = loader.getController();
+                var tempUndoData = new UndoData(classDiagram.getRelations()); 
                 controller.init(null, classDiagram, true);
                 stage.showAndWait();
-                c_diagram_UI.draw(); //vykresledni diagramu trid
+                if (controller.getDataSaved()) {
+                    c_diagram_UI.draw(); //vykresledni diagramu trid
+                    UndoData.setUndoBuffer(tempUndoData); 
+                }
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -116,9 +122,14 @@ public class Controller implements EventHandler<ActionEvent> {
                 stage.setScene(new Scene(loader.load(), 400, 400));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 AddObjUI controller = loader.getController();
-                controller.init(s_diagrams_array.get(diagIndex), classDiagram);
+                var seqDiag = s_diagrams_array.get(diagIndex);
+                var tempUndoData = new UndoData(seqDiag, seqDiag.getObjects(), null);
+                controller.init(seqDiag, classDiagram);
                 stage.showAndWait();
-                s_diagrams_array_ui.get(diagIndex).draw(); //vykresledni sekvencniho diagramu
+                if (controller.getDataSaved()) {
+                    s_diagrams_array_ui.get(diagIndex).draw(); //vykresledni sekvencniho diagramu
+                    UndoData.setUndoBuffer(tempUndoData);
+                }
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -138,9 +149,14 @@ public class Controller implements EventHandler<ActionEvent> {
                 stage.setScene(new Scene(loader.load(), 400, 400));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 AddMessRelUI controller = loader.getController();
-                controller.init(s_diagrams_array.get(diagIndex), classDiagram, false);
+                var seqDiag = s_diagrams_array.get(diagIndex);
+                var tempUndoData = new UndoData(seqDiag, null, seqDiag.getMessages());
+                controller.init(seqDiag, classDiagram, false);
                 stage.showAndWait();
-                s_diagrams_array_ui.get(diagIndex).draw(); 
+                if (controller.getDataSaved()) {
+                    s_diagrams_array_ui.get(diagIndex).draw(); 
+                    UndoData.setUndoBuffer(tempUndoData);
+                }
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -197,6 +213,50 @@ public class Controller implements EventHandler<ActionEvent> {
         addObjWindow.setDisable(false);
         addMessWindow.setDisable(false);
 
+    }
+
+    @FXML
+    public void undo() {
+
+        var undoData = UndoData.getUndoBuffer();
+
+        if (undoData == null) {
+            return;
+        }
+        if (undoData.prevRels != null) {
+            classDiagram.clearRelations();
+            for (var rel : undoData.prevRels) {
+                classDiagram.addRelation(rel);
+            }
+            c_diagram_UI.draw();
+        }
+        if (undoData.prevClass != null) {
+            var cl = classDiagram.getClassAt(undoData.classPos);
+            if (cl != null) {
+                cl.rename(undoData.prevClass.getName());
+                for (UMLAttribute attr : undoData.prevClass.getAttributes()) {
+                    cl.addAttribute(attr);
+                }
+                for (UMLOperation meth : undoData.prevClass.getOperation()) {
+                    cl.addOperation(meth);
+                }
+            }
+            c_diagram_UI.draw();
+        }
+        if (undoData.prevMess != null) {
+            undoData.lastDiag.clearMessages();
+            for (var mess : undoData.prevMess) {
+                undoData.lastDiag.addMessage(mess);
+            }
+        }
+        if (undoData.prevObjs != null) {
+            undoData.lastDiag.clearObjects();
+            for (var obj : undoData.prevObjs) {
+                undoData.lastDiag.addObject(obj);
+            }
+        }
+
+        UndoData.clearUndoBuffer();
     }
     
     @Override
