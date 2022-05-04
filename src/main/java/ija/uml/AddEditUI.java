@@ -28,10 +28,11 @@ public class AddEditUI {
     String currentItem;
     ArrayList<UMLAttribute> attrs = new ArrayList<UMLAttribute>();
     ArrayList<UMLOperation> meths = new ArrayList<UMLOperation>(); 
-    boolean dataSaved = false;
+    private boolean dataSaved = false;
+    private boolean dataDeleted = false;
 
     @FXML
-    private Button save;
+    private Button save, class_del;
     @FXML
     private TextField title;
     @FXML
@@ -55,6 +56,7 @@ public class AddEditUI {
             "+", "-", "#", "~"));
         meth_access_mod.getSelectionModel().selectFirst();
         if (isEditMode) {
+            class_del.setVisible(true);
             title.setText(editClass.getName());
             save.setText("Uložit");
             for (UMLAttribute attr : editClass.getAttributes()) {
@@ -76,6 +78,7 @@ public class AddEditUI {
 
     @FXML
     void save_class() {
+        //kontrola
         if (title.getText().isEmpty()) {
             Controller.errorMessage("Musíte vyplnit jméno třídy"); 
             return;
@@ -164,8 +167,22 @@ public class AddEditUI {
         }
     } 
 
+    @FXML
+    void class_del() {
+        String name = editClass.getName();
+        classDiagram.deleteClass(name);
+        dataDeleted = true;
+        Stage stage = (Stage) save.getScene().getWindow();
+        stage.close();
+    } 
+
     boolean getDataSaved() {
         return dataSaved;
     }
+
+    boolean getDataDeleted() {
+        return dataDeleted;
+    }
+
 }
 

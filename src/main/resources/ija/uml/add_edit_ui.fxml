@@ -26,6 +26,11 @@
          <children>
             <Button fx:id="close" mnemonicParsing="false" onAction="#close" text="Zrušit" />
             <Button fx:id="save" mnemonicParsing="false" onAction="#save_class" text="Přidat třídu" />
+            <Button fx:id="class_del" mnemonicParsing="false" onAction="#class_del" text="Odstranit třídu" visible="false">
+               <HBox.margin>
+                  <Insets left="100.0" />
+               </HBox.margin>
+            </Button>
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -38,7 +43,8 @@
                   <Label prefHeight="17.0" prefWidth="33.0" text="Název">
                      <HBox.margin>
                         <Insets left="10.0" />
-                     </HBox.margin></Label>
+                     </HBox.margin>
+                  </Label>
                   <TextField fx:id="title" prefHeight="25.0" prefWidth="339.0" />
                </children>
             </HBox>

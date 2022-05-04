@@ -165,8 +165,8 @@ public class SequenceDiagramUI extends ScrollPane {
             drawLine(message);
             drawTimeline(timeline_to, end_position, timeline_to, end_position + 60);
             drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
-            message.getObjFrom().setRectangle(false);
-            message.getObjTo().setRectangle(false);
+            /* message.getObjFrom().setRectangle(false);
+            message.getObjTo().setRectangle(false); */
             message.getObjFrom().delObjMess(message.getObjTo());
         }
         end_position += 60;

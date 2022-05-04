@@ -29,8 +29,9 @@ public class UMLClassUI extends VBox {
     private ListView<String> attributes, operation;
     UMLClass umlClass;
     ClassDiagram classDiagram;
+    ClassDiagramUI classDiagramUI;
 
-    public UMLClassUI(UMLClass umlClass, ClassDiagram classDiagram) {
+    public UMLClassUI(UMLClass umlClass, ClassDiagram classDiagram, ClassDiagramUI classDiagramUI) {
         this.umlClass = umlClass;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("uml_class_ui.fxml"));
         fxmlLoader.setRoot(this);
@@ -42,6 +43,7 @@ public class UMLClassUI extends VBox {
             throw new RuntimeException(exception);
         }
         this.classDiagram = classDiagram;
+        this.classDiagramUI = classDiagramUI;
         initClass();
     }
 
@@ -55,11 +57,16 @@ public class UMLClassUI extends VBox {
                 stage.initModality(Modality.APPLICATION_MODAL);
                 AddEditUI controller = loader.getController();
                 var tempUndoData = new UndoData(umlClass, classDiagram.findClassPos(umlClass.getName()));
-                controller.init(null, true, umlClass);
+                controller.init(classDiagram, true, umlClass);
                 stage.showAndWait();
                 if (controller.getDataSaved()) {
                     UndoData.setUndoBuffer(tempUndoData);
                     initClass();
+                }
+                if (controller.getDataDeleted()) {
+                    UndoData.setUndoBuffer(tempUndoData); //TODO
+                    initClass();
+                    classDiagramUI.draw();
                 }
             }
             catch (IOException e) {

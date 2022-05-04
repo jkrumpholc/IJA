@@ -34,6 +34,11 @@ public class ClassDiagram extends Element{
         diagram.relations.clear();
     }
 
+    public void deleteClass(String name) {
+        UMLClass deleteClass = findClass(name);
+        classes.remove(deleteClass);
+    }
+
     public List<UMLRelation> getRelations() {
         return Collections.unmodifiableList(relations);
     }

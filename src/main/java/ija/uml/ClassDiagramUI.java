@@ -65,7 +65,7 @@ public class ClassDiagramUI extends ScrollPane {
     
     @FXML
     private void addClass(UMLClass umlClass) {
-        UMLClassUI umlClassUI = new UMLClassUI(umlClass, classDiagram);
+        UMLClassUI umlClassUI = new UMLClassUI(umlClass, classDiagram, this);
         umlClass.setPosition(x_pos, y_pos);
         umlClassUI.setLayoutX(x_pos);
         umlClassUI.setLayoutY(y_pos);
