@@ -1,6 +1,6 @@
 // autor: Tereza Buchníčková        //
 // login: xbuchn00                  //
-//      //
+//  custom control diagramu tříd    //
 
 package ija.uml;
 

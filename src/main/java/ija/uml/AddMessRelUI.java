@@ -1,6 +1,7 @@
-// autor: Tereza Buchníčková        //
-// login: xbuchn00                  //
-//      //
+// autor: Tereza Buchníčková             //
+// login: xbuchn00                       //
+// kontroler okna pro přidání vztahu     //
+// mezi třídami nebo zprývy mezi objekty //
 
 package ija.uml;
 
@@ -22,6 +23,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -42,6 +44,8 @@ public class AddMessRelUI {
     private ChoiceBox<String> type, class_from, class_to, method;
     @FXML
     private ListView<String> list;
+    @FXML
+    private CheckBox deact1, deact2;
     @FXML
     private Label label_from, label_to, method_lable;
 
@@ -67,7 +71,6 @@ public class AddMessRelUI {
             type.setItems(FXCollections.observableArrayList(
                 "Asociace", "Agregace", "Kompozice", "Generalizace"));
             type.getSelectionModel().selectFirst();
-            //TODO schovat metodu
         }
         else {
             class_to.getSelectionModel().selectedIndexProperty().addListener(
@@ -82,6 +85,13 @@ public class AddMessRelUI {
             type.getSelectionModel().selectedIndexProperty().addListener(
                 (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
                     int index = new_val.intValue();
+                    if (index == 2) {
+                        deact1.setVisible(true);
+                        deact2.setVisible(true);
+                    } else {
+                        deact1.setVisible(false);
+                        deact2.setVisible(false);
+                    }
                     method.setVisible(index < 2 ? true : false);
                     method_lable.setVisible(index < 2 ? true : false);
             });
@@ -187,13 +197,18 @@ public class AddMessRelUI {
             if ((type != MesType.SYNC && type != MesType.ASYN)) {
                 meth = "";
             }
-            UMLMessage mess = new UMLMessage(type, meth, sequenceDiagram.findObject(obf), sequenceDiagram.findObject(obt)); 
+            UMLObject objFrom = sequenceDiagram.findObject(obf);
+            UMLObject objTo = sequenceDiagram.findObject(obt);
+            UMLMessage mess = new UMLMessage(type, meth, objFrom, objTo); 
             messages.add(mess);
             if (!checkMessages()) {
                 messages.remove(mess);
                 return;
             }
             list.getItems().add(mess.toString()); //pridani zprav do seznamu
+            objFrom.setDeactive(deact1.isSelected());
+            objTo.setDeactive(deact2.isSelected());
+            //TODO aby checkboxy už nebyly checked
         } 
         
     }    
@@ -215,30 +230,30 @@ public class AddMessRelUI {
     boolean checkMessages() {
         for (UMLObject object : sequenceDiagram.getObjects()) {
             if(object.getAutCreate()) {
-                object.setActive(true);
+                object.setVisibleObj(true);
             }
             else {
-                object.setActive(false);
+                object.setVisibleObj(false);
             }
         }
         for (UMLMessage mess : messages) {
             // TODO doplnit další kontroly
-            if (!mess.getObjFrom().getActive()) {
+            if (!mess.getObjFrom().getVisible()) {
                 Controller.errorMessage("Objekt není vytvořený");
                 return false;
             }
             switch (mess.getType()) {
                 case CREATE:
-                    if (mess.getObjTo().getActive()) {
+                    if (mess.getObjTo().getVisible()) {
                         Controller.errorMessage("Objekt je již vytvořený");
                         return false;
                     }
-                    mess.getObjTo().setActive(true);
+                    mess.getObjTo().setVisibleObj(true);
                     break;
                 case ASYN:
                     break;
                 case DELETE:
-                    mess.getObjTo().setActive(false);
+                    mess.getObjTo().setVisibleObj(false);
                     break;
                 case SYNC:
                     mess.getObjTo().addObjMess(mess.getObjFrom());

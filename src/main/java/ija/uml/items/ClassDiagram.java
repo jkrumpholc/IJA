@@ -7,7 +7,7 @@ import java.util.List;
 public class ClassDiagram extends Element{
     ClassDiagram diagram;
     String name;
-    List<UMLClass> classes;
+    ArrayList<UMLClass> classes;
     List<UMLClassifier> classifiers;
     List<UMLRelation> relations;
     public ClassDiagram(String name) {
@@ -22,6 +22,13 @@ public class ClassDiagram extends Element{
     public UMLClass createClass(String name) {
         UMLClass umlClass = new UMLClass(name, true);
         diagram.classes.add(umlClass);
+        diagram.classifiers.add(umlClass.umlClassifier);
+        return umlClass;
+    }
+
+    public UMLClass createClassAt(int pos, String name) {
+        UMLClass umlClass = new UMLClass(name, true);
+        diagram.classes.add(pos, umlClass);
         diagram.classifiers.add(umlClass.umlClassifier);
         return umlClass;
     }

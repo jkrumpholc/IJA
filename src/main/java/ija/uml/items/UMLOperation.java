@@ -1,29 +1,42 @@
 package ija.uml.items;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UMLOperation extends UMLAttribute{
-    UMLOperation umlOperation;
-    String name;
-    UMLClassifier type;
-    List<UMLAttribute> arguments;
+    String arguments = "";
+    private boolean overrriden;
  
-    public UMLOperation(String name, UMLClassifier type, UMLClass.AccessMod mode) {
-        super(name, type, mode);
-        umlOperation = this;
-        umlOperation.name = name;
-        umlOperation.type = type;
-        umlOperation.arguments = new ArrayList<>();
+    public UMLOperation(String nameWithArgs, UMLClassifier type, UMLClass.AccessMod mode) {
+        super("", type, mode);
+        Pattern pattern = Pattern.compile("(\\w+)\\s*\\((.*)\\)", Pattern.CASE_INSENSITIVE);
+        Matcher m = pattern.matcher(nameWithArgs);
+        if (m.find()) {
+            this.name = m.group(1);
+            this.arguments = m.group(2).trim();
+        }
+        overrriden = false;
     }
-    public static UMLOperation create(String name, UMLClassifier type, UMLClass.AccessMod mode, UMLAttribute... umlAttributes) {
-        UMLOperation tmp = new UMLOperation(name, type, mode);
-        tmp.arguments.addAll(Arrays.asList(umlAttributes));
-        return tmp;
+    // public static UMLOperation create(String name, UMLClassifier type, UMLClass.AccessMod mode, UMLAttribute... umlAttributes) {
+    //     UMLOperation tmp = new UMLOperation(name, type, mode);
+    //     tmp.arguments.addAll(Arrays.asList(umlAttributes));
+    //     return tmp;
+    // }
+
+    public void setOverrirde(boolean over) {
+        overrriden = over;
     }
 
-    public List<UMLAttribute> getArguments() {
-        return umlOperation.arguments;
+    public boolean getOverrirde() {
+        return overrriden;
+    }
+
+    public String getArguments() {
+        return arguments;
+    }
+
+    public String toString() {
+        String ret = super.toString();
+        return ret.replace(" :", "(" + arguments + ") :");
     }
 }

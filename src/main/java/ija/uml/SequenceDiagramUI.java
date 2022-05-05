@@ -1,6 +1,6 @@
-// autor: Tereza Buchníčková        //
-// login: xbuchn00                  //
-//      //
+// autor: Tereza Buchníčková           //
+// login: xbuchn00                     //
+// custom control sekvenčního diagramu //
 
 package ija.uml;
 
@@ -61,11 +61,11 @@ public class SequenceDiagramUI extends ScrollPane {
             
             object.setRectangle(false);
             if(object.getAutCreate()) {
-                object.setActive(true);
+                object.setVisibleObj(true);
                 drawObj(object);
             }
             else {
-                object.setActive(false);
+                object.setVisibleObj(false);
             }
         } 
         end_position = obj_end + line_length; 
@@ -76,7 +76,7 @@ public class SequenceDiagramUI extends ScrollPane {
             for (UMLObject object : seqDiagram.getObjects()) {
                 if(object != mess.getObjFrom() && object != mess.getObjTo()) {
                     double timeline = object.getXPosition() + line_start_position;
-                    if(object.getActive()){
+                    if(object.getVisible()){
                         drawTimeline(timeline, end_position - 60, timeline, end_position);
                         if(object.getRectangle()){
                             drawRectangle(timeline - 3, end_position - 60, rectangle_width, part_height);
@@ -121,7 +121,7 @@ public class SequenceDiagramUI extends ScrollPane {
                 drawRectangle(timeline_from - 3, end_position, rectangle_width, 40);
                 drawTimeline(timeline_from, end_position + 40, timeline_from, end_position + 60);
             }
-            message.getObjTo().setActive(true);
+            message.getObjTo().setVisibleObj(true);
         }
         if (type == MesType.ASYN) {
             drawLine(message);
@@ -151,7 +151,7 @@ public class SequenceDiagramUI extends ScrollPane {
             } else {
                 drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
             }
-            message.getObjTo().setActive(false);
+            message.getObjTo().setVisibleObj(false);
         }
         if (type == MesType.SYNC) {
             drawLine(message);
@@ -163,10 +163,20 @@ public class SequenceDiagramUI extends ScrollPane {
         }
         if (type == MesType.REPLY) {
             drawLine(message);
-            drawTimeline(timeline_to, end_position, timeline_to, end_position + 60);
-            drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
-            /* message.getObjFrom().setRectangle(false);
-            message.getObjTo().setRectangle(false); */
+            if (message.getObjFrom().getDeactive()) {
+                message.getObjFrom().setRectangle(false);
+                drawTimeline(timeline_to, end_position, timeline_to, end_position + 60);
+            }
+            else {
+                drawRectangle(timeline_from - 3, end_position, rectangle_width, part_height);
+            }
+            if (message.getObjTo().getDeactive()) {
+                message.getObjTo().setRectangle(false);
+                drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
+            }
+            else {
+                drawRectangle(timeline_to - 3, end_position, rectangle_width, part_height);
+            }
             message.getObjFrom().delObjMess(message.getObjTo());
         }
         end_position += 60;

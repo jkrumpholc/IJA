@@ -1,3 +1,7 @@
+// autor: Tereza Buchníčková        //
+// login: xbuchn00                  //
+//            //
+
 package ija.uml;
 
 import java.util.ArrayList;
@@ -18,6 +22,7 @@ public class UndoData {
     ArrayList<UMLObject> prevObjs = null;
     UMLClass prevClass = null;
     int classPos = 0;
+    boolean classDeleted = false;
     SequenceDiagram lastDiag = null;    
     UndoData(List<UMLRelation> prevRels) {
         this.prevRels = new ArrayList<>(prevRels);

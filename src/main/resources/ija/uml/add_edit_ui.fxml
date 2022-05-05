@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- autor: Tereza Buchníčková     // -->
-<!-- login: xbuchn00               // -->
-<!--            // -->
+<!-- autor: Tereza Buchníčková                      // -->
+<!-- login: xbuchn00                                // -->
+<!-- struktura okna pro přidávání nebo editaci tříd // -->
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -109,9 +109,9 @@
                               <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                                  <children>
                                  <TextField fx:id="meth_name" />
-                                    <Label text="nazev()   nezav(typ parametr, typ parametr)" textFill="#00000099">
+                                    <Label text="nazev()   nazev(typ parametr, typ parametr)" textFill="#00000099">
                                        <font>
-                                          <Font size="10.0" />
+                                          <Font size="12.0" />
                                        </font>
                                     </Label>
                                  </children>

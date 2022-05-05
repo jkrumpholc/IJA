@@ -2,7 +2,7 @@
 
 <!-- autor: Tereza Buchníčková     // -->
 <!-- login: xbuchn00               // -->
-<!-- hlavní struktura aplikace     // -->
+<!-- hlavní struktura okna aplikace     // -->
 
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.geometry.Insets?>

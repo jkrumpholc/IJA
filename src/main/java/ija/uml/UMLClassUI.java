@@ -49,29 +49,30 @@ public class UMLClassUI extends VBox {
 
     @FXML
     public void editClass() {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("add_edit_ui.fxml"));
-                Stage stage = new Stage();
-                stage.setTitle("Upravit třídu");
-                stage.setScene(new Scene(loader.load(), 400, 400));
-                stage.initModality(Modality.APPLICATION_MODAL);
-                AddEditUI controller = loader.getController();
-                var tempUndoData = new UndoData(umlClass, classDiagram.findClassPos(umlClass.getName()));
-                controller.init(classDiagram, true, umlClass);
-                stage.showAndWait();
-                if (controller.getDataSaved()) {
-                    UndoData.setUndoBuffer(tempUndoData);
-                    initClass();
-                }
-                if (controller.getDataDeleted()) {
-                    UndoData.setUndoBuffer(tempUndoData); //TODO
-                    initClass();
-                    classDiagramUI.draw();
-                }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("add_edit_ui.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Upravit třídu");
+            stage.setScene(new Scene(loader.load(), 400, 400));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            AddEditUI controller = loader.getController();
+            var tempUndoData = new UndoData(umlClass, classDiagram.findClassPos(umlClass.getName()));
+            controller.init(classDiagram, true, umlClass);
+            stage.showAndWait();
+            if (controller.getDataSaved()) {
+                UndoData.setUndoBuffer(tempUndoData);
+                initClass();
             }
-            catch (IOException e) {
-                e.printStackTrace();
+            if (controller.getDataDeleted()) {
+                tempUndoData.classDeleted = true;
+                UndoData.setUndoBuffer(tempUndoData); 
+                initClass();
+                classDiagramUI.draw();
             }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initClass() {
@@ -82,7 +83,11 @@ public class UMLClassUI extends VBox {
             attributes.getItems().add(attr.toString());
         }
         for (UMLOperation meth : umlClass.getOperation()) {
-            operation.getItems().add(meth.toString());
+            String prefMeth = "";
+            if (meth.getOverrirde()) {
+                prefMeth += "OVR ";
+            }
+            operation.getItems().add(prefMeth + meth.toString());
         }
     }
 }

@@ -1,6 +1,6 @@
-// autor: Tereza Buchníčková        //
-// login: xbuchn00                  //
-//      //
+// autor: Tereza Buchníčková                        //
+// login: xbuchn00                                  //
+// kontroler okna pro přidání nebo editaci třídy    //
 
 package ija.uml;
 

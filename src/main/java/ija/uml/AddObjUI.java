@@ -1,6 +1,7 @@
-// autor: Tereza Buchníčková        //
-// login: xbuchn00                  //
-//      //
+// autor: Tereza Buchníčková              //
+// login: xbuchn00                        //
+// kontroler okna pro přidání objektu     //
+// do sekvenčního diagramu                //
 package ija.uml;
 
 import java.util.ArrayList;

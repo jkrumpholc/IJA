@@ -11,8 +11,9 @@ public class UMLObject extends Element {
     boolean autCreate;
     double x_pos;
     double y_pos;
-    boolean active = false;
+    boolean visible = false;
     boolean rectangle = false;
+    boolean deactive = false;
     ArrayList<UMLObject> listObjMess = new ArrayList<UMLObject>();
     //seznam objektu, ktere poslaly tomuto objektu zpravu
 
@@ -44,12 +45,12 @@ public class UMLObject extends Element {
         return y_pos;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setVisibleObj(boolean visible) {
+        this.visible = visible;
     }
 
-    public boolean getActive() {
-        return this.active;
+    public boolean getVisible() {
+        return this.visible;
     }
 
     public void setRectangle(boolean rectangle) {
@@ -74,5 +75,13 @@ public class UMLObject extends Element {
 
     public UMLClass getUMLClass() {
         return this.umlClass;
+    }
+
+    public void setDeactive(boolean deactive) {
+        this.deactive = deactive;
+    }
+
+    public boolean getDeactive() {
+        return this.deactive;
     }
 }

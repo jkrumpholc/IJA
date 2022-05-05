@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- autor: Tereza Buchníčková     // -->
-<!-- login: xbuchn00               // -->
-<!--            // -->
+<!-- autor: Tereza Buchníčková                            // -->
+<!-- login: xbuchn00                                      // -->
+<!-- strukrura části aplikace, kde se vykreslují diagramy // -->
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
