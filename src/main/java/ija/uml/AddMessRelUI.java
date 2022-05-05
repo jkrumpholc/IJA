@@ -37,6 +37,7 @@ public class AddMessRelUI {
     ArrayList<UMLMessage> messages = new ArrayList<UMLMessage>();
     boolean isRelMode;
     boolean dataSaved = false;
+    boolean answer = false;
 
     @FXML
     private Button save;
@@ -86,6 +87,7 @@ public class AddMessRelUI {
                 (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
                     int index = new_val.intValue();
                     if (index == 2) {
+                        answer =  true;
                         deact1.setVisible(true);
                         deact2.setVisible(true);
                     } else {
@@ -206,9 +208,11 @@ public class AddMessRelUI {
                 return;
             }
             list.getItems().add(mess.toString()); //pridani zprav do seznamu
-            objFrom.setDeactive(deact1.isSelected());
-            objTo.setDeactive(deact2.isSelected());
-            //TODO aby checkboxy už nebyly checked
+            //TODO mozna presunout
+            if(answer) {
+                mess.setDeactive(deact1.isSelected());
+                mess.setDeactive(deact2.isSelected());
+            }
         } 
         
     }    
@@ -237,7 +241,6 @@ public class AddMessRelUI {
             }
         }
         for (UMLMessage mess : messages) {
-            // TODO doplnit další kontroly
             if (!mess.getObjFrom().getVisible()) {
                 Controller.errorMessage("Objekt není vytvořený");
                 return false;

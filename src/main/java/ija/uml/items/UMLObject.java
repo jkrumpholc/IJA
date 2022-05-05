@@ -13,7 +13,6 @@ public class UMLObject extends Element {
     double y_pos;
     boolean visible = false;
     boolean rectangle = false;
-    boolean deactive = false;
     ArrayList<UMLObject> listObjMess = new ArrayList<UMLObject>();
     //seznam objektu, ktere poslaly tomuto objektu zpravu
 
@@ -23,7 +22,6 @@ public class UMLObject extends Element {
         this.autCreate = autCreate;
     }
     
-    //TODO předělat auto
     public java.lang.String toString() {
         return String.format("%s : %s",this.name,this.umlClass.name);
     }
@@ -75,13 +73,5 @@ public class UMLObject extends Element {
 
     public UMLClass getUMLClass() {
         return this.umlClass;
-    }
-
-    public void setDeactive(boolean deactive) {
-        this.deactive = deactive;
-    }
-
-    public boolean getDeactive() {
-        return this.deactive;
     }
 }

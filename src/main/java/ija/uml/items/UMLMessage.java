@@ -6,7 +6,6 @@ package ija.uml.items;
 
 
 public class UMLMessage {
-    //TODO přidat název (metodu)
 
     public enum MesType {
         SYNC,
@@ -19,6 +18,7 @@ public class UMLMessage {
     String method;
     UMLObject objFrom;
     UMLObject objTo;
+    boolean deactive = false;
 
     public UMLMessage(MesType type, String method, UMLObject umlObject, UMLObject umlObject2) {
         this.type = type;
@@ -63,6 +63,14 @@ public class UMLMessage {
 
     public String getMethod() {
         return method;
+    }
+
+    public void setDeactive(boolean deactive) {
+        this.deactive = deactive;
+    }
+
+    public boolean getDeactive() {
+        return this.deactive;
     }
 }
 

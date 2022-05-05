@@ -163,16 +163,16 @@ public class SequenceDiagramUI extends ScrollPane {
         }
         if (type == MesType.REPLY) {
             drawLine(message);
-            if (message.getObjFrom().getDeactive()) {
+            if (message.getDeactive()) {
                 message.getObjFrom().setRectangle(false);
-                drawTimeline(timeline_to, end_position, timeline_to, end_position + 60);
+                drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
             }
             else {
                 drawRectangle(timeline_from - 3, end_position, rectangle_width, part_height);
             }
-            if (message.getObjTo().getDeactive()) {
+            if (message.getDeactive()) {
                 message.getObjTo().setRectangle(false);
-                drawTimeline(timeline_from, end_position, timeline_from, end_position + 60);
+                drawTimeline(timeline_to, end_position, timeline_to, end_position + 60);
             }
             else {
                 drawRectangle(timeline_to - 3, end_position, rectangle_width, part_height);
