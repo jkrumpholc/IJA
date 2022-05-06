@@ -1,6 +1,6 @@
 // autor: Tereza Buchníčková        //
 // login: xbuchn00                  //
-//      //
+// objekty sekvenčního diagramu     //
 
 package ija.uml.items;
 

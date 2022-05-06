@@ -202,7 +202,7 @@ public class SequenceDiagramUI extends ScrollPane {
         if (x1 < x2) {
             name.setLayoutX(x1 + line_start_position + 40);
         } else {
-            name.setLayoutX(x2 - line_start_position - 40); //TODO nefunguje
+            name.setLayoutX(x1 + line_start_position - 60); 
         }
         name.setLayoutY(end_position);
         if (type == MesType.CREATE || type == MesType.REPLY) {

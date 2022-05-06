@@ -1,6 +1,6 @@
-// autor: Tereza Buchníčková        //
-// login: xbuchn00                  //
-//      //
+// autor: Tereza Buchníčková         //
+// login: xbuchn00                   //
+// zprávy mezi objekty sek. diagramu //
 
 package ija.uml.items;
 

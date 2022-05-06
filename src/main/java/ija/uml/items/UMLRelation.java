@@ -1,6 +1,6 @@
 // autor: Tereza Buchníčková        //
 // login: xbuchn00                  //
-//      //
+// vztahy mezi třídami              //
 
 package ija.uml.items;
 

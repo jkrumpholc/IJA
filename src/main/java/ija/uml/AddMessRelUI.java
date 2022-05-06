@@ -208,7 +208,6 @@ public class AddMessRelUI {
                 return;
             }
             list.getItems().add(mess.toString()); //pridani zprav do seznamu
-            //TODO mozna presunout
             if(answer) {
                 mess.setDeactive(deact1.isSelected());
                 mess.setDeactive(deact2.isSelected());
