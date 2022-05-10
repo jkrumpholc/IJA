@@ -17,6 +17,14 @@ public class UMLOperation extends UMLAttribute{
         }
         overrriden = false;
     }
+
+    public UMLOperation(UMLOperation source){
+        super(source.name, new UMLClassifier(source.type.name,source.type.isUserDefined),source.mode);
+        this.arguments = source.arguments;
+        this.overrriden = source.overrriden;
+        this.mode = source.mode;
+
+    }
     // public static UMLOperation create(String name, UMLClassifier type, UMLClass.AccessMod mode, UMLAttribute... umlAttributes) {
     //     UMLOperation tmp = new UMLOperation(name, type, mode);
     //     tmp.arguments.addAll(Arrays.asList(umlAttributes));

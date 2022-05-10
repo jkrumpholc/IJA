@@ -7,6 +7,8 @@ package ija.uml;
 import java.io.File;
 import java.io.IOException;
 
+import com.google.gson.*;
+import com.google.gson.stream.MalformedJsonException;
 import ija.uml.items.ClassDiagram;
 import ija.uml.items.SequenceDiagram;
 import ija.uml.items.UMLAttribute;
@@ -32,12 +34,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import netscape.javascript.JSObject;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class Controller implements EventHandler<ActionEvent> {
 
@@ -169,66 +168,57 @@ public class Controller implements EventHandler<ActionEvent> {
     }
 
     @FXML
-    public void open() {
-        ArrayList data;
+    public void open() throws IOException, MalformedJsonException {
+        String data;
         FileChooser file_chooser = new FileChooser();
+        file_chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files", "*.json"));
+        file_chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.*"));
         File selected_file = file_chooser.showOpenDialog(null);
         if (selected_file != null) {
             data = File_manager.open(selected_file);
-            JSONObject diagram = (JSONObject) data.get(0);
-            String diagram_name = diagram.get("name").toString();
-            int class_num = ((JSONArray) diagram.get("classes")).size();
-            int classifiers_num = ((JSONArray) diagram.get("classifiers")).size();
-            JSONObject classes = (JSONObject) data.get(1);
-            JSONObject classifiers = (JSONObject) data.get(2);
-            JSONObject attributes = (JSONObject) data.get(3);
-            JSONObject operations = (JSONObject) data.get(4);
-            ArrayList<UMLClass> classes_list = new ArrayList<UMLClass>();
-            ArrayList<UMLClassifier> classifiers_list = new ArrayList<UMLClassifier>();
-            ArrayList<UMLAttribute> attribute_list = new ArrayList<UMLAttribute>();
-            ArrayList<UMLOperation> operation_list = new ArrayList<UMLOperation>();
-            ArrayList<UMLRelation> relation_list = new ArrayList<UMLRelation>();
-
-            if (class_num != classes.size()){
-                System.out.println("Inconsistency");}
-            classifiers.keySet().forEach(classifier_name ->{
-                JSONObject classifier_object = (JSONObject) classifiers.get(classifier_name);
-                UMLClassifier classifier = new UMLClassifier((String) classifier_name);
-                classifiers_list.add(classifier);
-            });
-            attributes.keySet().forEach(attribute_name ->{
-                JSONObject attribute_object = (JSONObject) attributes.get(attribute_name);
-                //UMLAttribute attribute = new UMLAttribute((String) attribute_name);
-
-            });
-            classes.keySet().forEach(class_name ->{
-                JSONObject class_object = (JSONObject) classes.get(class_name);
-                String UML_class_diagram = class_object.get("diagram").toString();
-                JSONArray UML_class_attributes = (JSONArray) class_object.get("attributes");
-                if (!Objects.equals(diagram_name, UML_class_diagram)){
-                    System.out.println("Inconsistency");
+            JsonObject jsonObject = new JsonParser().parse(data).getAsJsonObject();
+            JsonArray classes_array = (JsonArray) jsonObject.getAsJsonObject("class diagram").get("classes");
+            JsonArray relations_array = (JsonArray) jsonObject.getAsJsonObject("class diagram").get("relations");
+            Gson gson = new Gson();
+            for (int i = 0; i < classes_array.size(); i++) {
+                UMLClass umlClass = new UMLClass(gson.fromJson((classes_array).get(i), UMLClass.class));
+                for (int j = 0;j < umlClass.getAttributes().size(); j++){
+                    umlClass.fix_attribute(umlClass.getAttributes().get(j), j);
                 }
+                for (int j = 0;j < umlClass.getOperations().size(); j++){
+                    umlClass.fix_operations(umlClass.getOperation().get(j), j);
+                }
+                classDiagram.addClass(umlClass);
+            }
+            for (int i = 0;i < relations_array.size(); i++){
+                JsonElement item = (relations_array).get(i);
+                UMLRelation umlRelation = new UMLRelation(gson.fromJson(item, UMLRelation.class));
+                umlRelation.setClassFrom(classDiagram.findClass(((JsonObject) item).getAsJsonObject("classFrom").get("name").getAsString()));
+                umlRelation.setClassTo(classDiagram.findClass(((JsonObject) item).getAsJsonObject("classTo").get("name").getAsString()));
+                classDiagram.addRelation(umlRelation);
 
-            });
-            //for (JSONObject Class: classes.values()){
-
-            //}
-        //TODO změnit cestu
-        UMLClass cl = classDiagram.createClass("Cl1");
-        cl.addAttribute(new UMLAttribute("attr1", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
-        cl.addAttribute(new UMLAttribute("attr2", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
-        cl.addOperation(new UMLOperation("meth1", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
-        cl.addOperation(new UMLOperation("meth2", new UMLClassifier("String"), UMLClass.AccessMod.PUBLIC));
-        UMLClass c2 = classDiagram.createClass("Class2");
-        c2.addAttribute(new UMLAttribute("attr3", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
-        c2.addAttribute(new UMLAttribute("attr4", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
-        c2.addOperation(new UMLOperation("meth3", new UMLClassifier("int"), UMLClass.AccessMod.PUBLIC));
-        c2.addOperation(new UMLOperation("meth4", new UMLClassifier("String"), UMLClass.AccessMod.PUBLIC));
-        classDiagram.addRelation(new UMLRelation(UMLRelation.RelType.AGGR, cl, cl));
-        classDiagram.addRelation(new UMLRelation(UMLRelation.RelType.GENER, cl, c2));
-        c_diagram_UI.draw();
+            }
+            c_diagram_UI.draw();
         } else {
             System.out.println("Chyba při otevření souboru");
+        }
+    }
+
+    /**
+     * @throws IOException
+     */
+    @FXML
+    public void save_file() throws IOException {
+        FileChooser file_chooser = new FileChooser();
+        file_chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files", "*.json"));
+        file_chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.*"));
+        File selected_file = file_chooser.showSaveDialog(null);
+        if (selected_file != null) {
+            Gson gson = new Gson();
+            String json_classes = gson.toJson(classDiagram.getClasses());
+            String json_relations = gson.toJson(classDiagram.getRelations());
+            String json = "{\"class diagram\":{\"name\": \""+classDiagram.getName()+"\", \"classes\":"+json_classes+",\"relations\":"+json_relations+"}}";
+            File_manager.write(selected_file.toString(),json);
         }
     }
 

@@ -12,6 +12,13 @@ public class UMLAttribute extends Element{
         this.mode = mode;
     }
 
+    public UMLAttribute(UMLAttribute source){
+        super(source.name);
+        this.position = source.position;
+        this.mode = source.mode;
+        this.type = new UMLClassifier(source.type.name, source.type.isUserDefined);
+    }
+
     public UMLClassifier getType() {
         return this.type;
     }

@@ -33,6 +33,10 @@ public class ClassDiagram extends Element{
         return umlClass;
     }
 
+    public void addClass(UMLClass umlClass){
+        diagram.classes.add(umlClass);
+        diagram.classifiers.add(umlClass.umlClassifier);}
+
     public void addRelation(UMLRelation rel) {
         diagram.relations.add(rel);
     }

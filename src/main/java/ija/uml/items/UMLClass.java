@@ -81,8 +81,20 @@ public class UMLClass extends UMLClassifier{
         return 0;
     }
 
+    public void fix_attribute(UMLAttribute source, Integer id){
+        attribute_list.set(id,new UMLAttribute(source));
+    }
+
+    public void fix_operations(UMLOperation source, Integer id){
+        operation_list.set(id, new UMLOperation(source));
+    }
+
     public List<UMLAttribute> getAttributes() {
         return Collections.unmodifiableList(attribute_list);
+    }
+
+    public List<UMLOperation> getOperations(){
+        return Collections.unmodifiableList(operation_list);
     }
 
     public void delAttributesOperation() {

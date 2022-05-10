@@ -5,6 +5,12 @@
 package ija.uml.items;
 
 public class UMLRelation {
+    public UMLRelation(UMLRelation source) {
+        this.type = source.type;
+        this.classFrom = null;
+        this.classTo = null;
+    }
+
     public enum RelType {
         ASSOC,
         AGGR,
@@ -42,6 +48,14 @@ public class UMLRelation {
     
     public UMLClass getClassFrom() {
             return classFrom;
+    }
+
+    public void setClassFrom(UMLClass newclassFrom){
+        classFrom = newclassFrom;
+    }
+
+    public void setClassTo(UMLClass newclassTo){
+        classTo = newclassTo;
     }
 
     public UMLClass getClassTo() {

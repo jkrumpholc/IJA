@@ -55,7 +55,7 @@
                 <Menu mnemonicParsing="false" text="Soubor">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Otevřít" onAction="#open" />
-                        <MenuItem mnemonicParsing="false" text="Uložit jako" />
+                        <MenuItem mnemonicParsing="false" text="Uložit jako" onAction="#save_file" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Úpravy">
