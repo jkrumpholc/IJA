@@ -19,6 +19,13 @@ public class SequenceDiagram extends Element {
         this.id = id;
     }
 
+    public SequenceDiagram(SequenceDiagram source){
+        super(source.name);
+        this.id = source.id;
+        this.listObject = source.listObject;
+        this.listMessages = source.listMessages;
+    }
+
     public void addObject(UMLObject obj) {
         listObject.add(obj);
     } 
@@ -50,5 +57,8 @@ public class SequenceDiagram extends Element {
             }
         }
         return null;
+    }
+    public void fixObjects(UMLObject umlObject,int i){
+        this.listObject.get(i).umlClass = ClassDiagram.findClass(umlObject.umlClass.name);
     }
 }

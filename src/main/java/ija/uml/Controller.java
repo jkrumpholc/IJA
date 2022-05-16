@@ -179,6 +179,7 @@ public class Controller implements EventHandler<ActionEvent> {
             JsonObject jsonObject = new JsonParser().parse(data).getAsJsonObject();
             JsonArray classes_array = (JsonArray) jsonObject.getAsJsonObject("class diagram").get("classes");
             JsonArray relations_array = (JsonArray) jsonObject.getAsJsonObject("class diagram").get("relations");
+            JsonObject sequence_diagrams = jsonObject.getAsJsonObject("sequence diagram");
             Gson gson = new Gson();
             for (int i = 0; i < classes_array.size(); i++) {
                 UMLClass umlClass = new UMLClass(gson.fromJson((classes_array).get(i), UMLClass.class));
@@ -193,10 +194,18 @@ public class Controller implements EventHandler<ActionEvent> {
             for (int i = 0;i < relations_array.size(); i++){
                 JsonElement item = (relations_array).get(i);
                 UMLRelation umlRelation = new UMLRelation(gson.fromJson(item, UMLRelation.class));
-                umlRelation.setClassFrom(classDiagram.findClass(((JsonObject) item).getAsJsonObject("classFrom").get("name").getAsString()));
-                umlRelation.setClassTo(classDiagram.findClass(((JsonObject) item).getAsJsonObject("classTo").get("name").getAsString()));
+                umlRelation.setClassFrom(ClassDiagram.findClass(((JsonObject) item).getAsJsonObject("classFrom").get("name").getAsString()));
+                umlRelation.setClassTo(ClassDiagram.findClass(((JsonObject) item).getAsJsonObject("classTo").get("name").getAsString()));
                 classDiagram.addRelation(umlRelation);
 
+            }
+            for (int i = 0; i < sequence_diagrams.size(); i++) {
+                JsonElement item = (sequence_diagrams).getAsJsonObject(String.valueOf(i));
+                SequenceDiagram sequenceDiagram = new SequenceDiagram(gson.fromJson(item,SequenceDiagram.class));
+                for (int j = 0; j < sequenceDiagram.getObjects().size(); j++) {
+                    sequenceDiagram.fixObjects(sequenceDiagram.getObjects().get(j),j);
+                }
+                addSeqDiag(sequenceDiagram);
             }
             c_diagram_UI.draw();
         } else {
@@ -217,16 +226,31 @@ public class Controller implements EventHandler<ActionEvent> {
             Gson gson = new Gson();
             String json_classes = gson.toJson(classDiagram.getClasses());
             String json_relations = gson.toJson(classDiagram.getRelations());
-            String json = "{\"class diagram\":{\"name\": \""+classDiagram.getName()+"\", \"classes\":"+json_classes+",\"relations\":"+json_relations+"}}";
+            StringBuilder seq_diagram_string = new StringBuilder(",\"sequence diagram\":{");
+            for (int i = 0; i < s_diagrams_array.size(); i++) {
+                String id = "\""+i+"\",";
+                seq_diagram_string.append(id).append(gson.toJson(s_diagrams_array.get(i))).append(",");
+            }
+            if (s_diagrams_array.size() > 0){
+                seq_diagram_string.deleteCharAt(seq_diagram_string.length()-1);
+            }
+            seq_diagram_string.append("}");
+            String json = "{\"class diagram\":{\"name\": \""+classDiagram.getName()+"\", \"classes\":"+json_classes+",\"relations\":"+json_relations+"}"+seq_diagram_string+"}";
             File_manager.write(selected_file.toString(),json);
         }
     }
 
     @FXML
-    public void addSeqDiag() {
+    public void addNewSeqDiag() {
         SequenceDiagram s_diagram = new SequenceDiagram("Sequence Diagram", idSeqDiag);
-        s_diagrams_array.add(s_diagram);
-        SequenceDiagramUI s_diagram_ui = new SequenceDiagramUI(s_diagram);
+        addSeqDiag(s_diagram);
+
+    }
+
+    @FXML
+    public void addSeqDiag(SequenceDiagram sequenceDiagram) {
+        s_diagrams_array.add(sequenceDiagram);
+        SequenceDiagramUI s_diagram_ui = new SequenceDiagramUI(sequenceDiagram);
         String id = Integer.toString(idSeqDiag);
         s_diagram_ui.setId(id);
         s_diagrams_array_ui.add(s_diagram_ui);
@@ -234,13 +258,13 @@ public class Controller implements EventHandler<ActionEvent> {
         ToggleButton sd_button = new ToggleButton();
         sd_button.setText("Sekvenční diagram " + id);
         sd_button.setPrefWidth(200);
-        sd_button.setOnAction(this); 
+        sd_button.setOnAction(this);
         sd_button.setId(id);
         sd_button.setToggleGroup(buttonGroup);
         sd_button.setSelected(true);
         left_menu.getChildren().add(sd_button);
         activeDiag = idSeqDiag;
-        idSeqDiag++; 
+        idSeqDiag++;
         //znepristupnenii tlacitek pro diagram trid
         addClassWindow.setDisable(true);
         addRelWindow.setDisable(true);

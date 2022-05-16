@@ -69,7 +69,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Sekvenční diagram">
                     <items>
-                        <MenuItem fx:id="addSeqDiag" mnemonicParsing="false" text="Přidat sekvenční diagram" onAction="#addSeqDiag"/>
+                        <MenuItem fx:id="addSeqDiag" mnemonicParsing="false" text="Přidat sekvenční diagram" onAction="#addNewSeqDiag"/>
                         <MenuItem fx:id="addObjWindow" mnemonicParsing="false" text="Objekty" onAction="#addObjWindow"/>
                         <MenuItem fx:id="addMessWindow" mnemonicParsing="false" text="Zprávy" onAction="#addMessWindow"/>
                     </items>

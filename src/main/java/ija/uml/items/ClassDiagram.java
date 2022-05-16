@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ClassDiagram extends Element{
-    ClassDiagram diagram;
+    static ClassDiagram diagram;
     String name;
     ArrayList<UMLClass> classes;
     List<UMLClassifier> classifiers;
@@ -66,7 +66,7 @@ public class ClassDiagram extends Element{
         return null;
     }
 
-    public UMLClass findClass(String name) {
+    public static UMLClass findClass(String name) {
         for (UMLClass umlClass: diagram.classes){
             if (umlClass.name.equals(name)){
                 return umlClass;}
