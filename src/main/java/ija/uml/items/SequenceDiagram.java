@@ -58,7 +58,24 @@ public class SequenceDiagram extends Element {
         }
         return null;
     }
-    public void fixObjects(UMLObject umlObject,int i){
-        this.listObject.get(i).umlClass = ClassDiagram.findClass(umlObject.umlClass.name);
+    public boolean fixObjects(UMLObject umlObject,int i){
+        UMLClass umlClass = ClassDiagram.findClass(umlObject.umlClass.name);
+        if (umlClass == null){
+            System.err.println("Sekvenční diagram obsahuje třídu, která není v třídním diagramu");
+            this.listObject.remove(i);
+            return false;
+        }
+        this.listObject.get(i).umlClass = umlClass;
+        return true;
+    }
+    public void fixMessages(){
+        ArrayList<UMLMessage> newlistMessages = new ArrayList<>(listMessages);
+        for (int i = 0; i < listMessages.size(); i++) {
+            UMLObject objFrom = findObject(listMessages.get(i).objFrom.name);
+            UMLObject objTo = findObject(listMessages.get(i).objTo.name);
+            if (objFrom == null | objTo == null)
+                newlistMessages.remove(i);
+        }
+        this.listMessages = newlistMessages;
     }
 }

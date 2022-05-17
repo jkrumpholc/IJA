@@ -4,6 +4,7 @@
 
 package ija.uml;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 
@@ -168,7 +169,7 @@ public class Controller implements EventHandler<ActionEvent> {
     }
 
     @FXML
-    public void open() throws IOException, MalformedJsonException {
+    public void open() throws IOException {
         String data;
         FileChooser file_chooser = new FileChooser();
         file_chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files", "*.json"));
@@ -176,7 +177,14 @@ public class Controller implements EventHandler<ActionEvent> {
         File selected_file = file_chooser.showOpenDialog(null);
         if (selected_file != null) {
             data = File_manager.open(selected_file);
-            JsonObject jsonObject = new JsonParser().parse(data).getAsJsonObject();
+            JsonObject jsonObject = null;
+            try {
+                jsonObject = new JsonParser().parse(data).getAsJsonObject();
+            }
+            catch (JsonSyntaxException e){
+                System.err.println("Damaged file\nCannot open file: "+selected_file);
+                return;
+            }
             JsonArray classes_array = (JsonArray) jsonObject.getAsJsonObject("class diagram").get("classes");
             JsonArray relations_array = (JsonArray) jsonObject.getAsJsonObject("class diagram").get("relations");
             JsonObject sequence_diagrams = jsonObject.getAsJsonObject("sequence diagram");
@@ -194,16 +202,25 @@ public class Controller implements EventHandler<ActionEvent> {
             for (int i = 0;i < relations_array.size(); i++){
                 JsonElement item = (relations_array).get(i);
                 UMLRelation umlRelation = new UMLRelation(gson.fromJson(item, UMLRelation.class));
-                umlRelation.setClassFrom(ClassDiagram.findClass(((JsonObject) item).getAsJsonObject("classFrom").get("name").getAsString()));
-                umlRelation.setClassTo(ClassDiagram.findClass(((JsonObject) item).getAsJsonObject("classTo").get("name").getAsString()));
-                classDiagram.addRelation(umlRelation);
+                UMLClass classFrom = ClassDiagram.findClass(((JsonObject) item).getAsJsonObject("classFrom").get("name").getAsString());
+                umlRelation.setClassFrom(classFrom);
+                UMLClass classTo = ClassDiagram.findClass(((JsonObject) item).getAsJsonObject("classTo").get("name").getAsString());
+                umlRelation.setClassTo(classTo);
+                if (classFrom == null | classTo == null){
+                    System.err.println("Nelze vytvořit relaci; třída nenalezena");
+                }else {
+                    classDiagram.addRelation(umlRelation);}
 
             }
             for (int i = 0; i < sequence_diagrams.size(); i++) {
                 JsonElement item = (sequence_diagrams).getAsJsonObject(String.valueOf(i));
                 SequenceDiagram sequenceDiagram = new SequenceDiagram(gson.fromJson(item,SequenceDiagram.class));
+                boolean pass = true;
                 for (int j = 0; j < sequenceDiagram.getObjects().size(); j++) {
-                    sequenceDiagram.fixObjects(sequenceDiagram.getObjects().get(j),j);
+                    pass = sequenceDiagram.fixObjects(sequenceDiagram.getObjects().get(j),j);
+                }
+                if (!pass){
+                    sequenceDiagram.fixMessages();
                 }
                 addSeqDiag(sequenceDiagram);
             }
@@ -228,7 +245,7 @@ public class Controller implements EventHandler<ActionEvent> {
             String json_relations = gson.toJson(classDiagram.getRelations());
             StringBuilder seq_diagram_string = new StringBuilder(",\"sequence diagram\":{");
             for (int i = 0; i < s_diagrams_array.size(); i++) {
-                String id = "\""+i+"\",";
+                String id = "\""+i+"\":";
                 seq_diagram_string.append(id).append(gson.toJson(s_diagrams_array.get(i))).append(",");
             }
             if (s_diagrams_array.size() > 0){
